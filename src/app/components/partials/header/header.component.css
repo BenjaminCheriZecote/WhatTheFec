@@ -1,0 +1,50 @@
+.header {
+    background-image: url('/pexels-moose-photos-1587014.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    height: 100vh;
+}
+
+.headerSection {
+    width:100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding:1rem;
+}
+
+.headerSection nav {
+    margin-right: 2rem;
+} 
+
+.headerNavLinkContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    gap:1.5rem;
+}
+
+.headerNavLink {
+    list-style-type: none;
+}
+
+.headerNavLink a {
+    color: rgb(255, 0, 0);
+    font-weight: 500;
+    text-decoration: none;
+    background: transparent;
+    position: relative;
+    transition: all 1s;
+    overflow: hidden;
+}
+
+
+.headerSection h1 {
+    font-size: 7rem;
+    color: rgb(255, 0, 0);
+    /* font-family: 'Edu TAS Beginner', cursive; */
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    margin:0;
+}

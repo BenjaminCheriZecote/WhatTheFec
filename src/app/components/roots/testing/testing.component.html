@@ -1,0 +1,35 @@
+<section class="fileSection">
+    <form #form method="post" action="/test" id="formFile" (click)="findFile()">
+        <header>File uploader JavaScript</header>
+        <i class='bx bx-cloud-download'></i>
+        <label for="inputFile">
+            <input #file id="inputFile" type="file" accept=".txt, .csv" hidden (change)="getFile()">
+        </label>
+        <button hidden id="btn">Envoyer</button>
+    </form>
+    <div class="progress-area">
+        <!-- <li class="row">
+            <i class='bx bxs-file-blank'></i>
+            <div class="content">
+                <div class="details">
+                    <span class="name">fec_test.txt</span>
+                    <span class="percent">50%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+            <p>Télécharger</p>
+            </li> -->
+        
+    </div>
+    <p class="errorTypeFile"></p>
+</section>
+
+<section class="reportSection">
+    <aside *ngIf="clientListFEC && clientListFEC[0]" class="reportContainer ">
+        <div class="reportFeedback"></div>
+        <div class="reportFeedback1"></div>
+        <div class="reportFeedback2"></div>
+    </aside>
+</section>

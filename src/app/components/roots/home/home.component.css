@@ -1,0 +1,59 @@
+.homeSection {
+    display: flex;
+    flex-flow: column nowrap;
+    padding:1rem;
+}
+
+.headerHome {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem;
+    gap:0.7rem;
+    margin-bottom: 1.7rem;
+}
+
+.homeArticleContainer {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    gap:2rem;
+    text-align: center;
+}
+
+.homeArticle {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.4rem;
+    width: 30%;
+    padding: 2rem 1.4rem 3rem 1.4rem;
+    border-radius: 0.3rem;
+    box-shadow:5px 5px 15px 5px  var(--colorBoxShadow);
+    transition: .2s ease-in-out;
+}
+
+
+.homeSection h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color:var(--colorRedDark);
+    color: var(--colorRedDarkPlus);;
+}
+
+.bx {
+    font-size: 2rem;
+    color: var(--colorIconHome);;
+    color:var(--colorRedDark);
+    color: var(--colorRed);
+}
+
+.homeArticle h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.homeArticle:hover {
+    background-color: var(--colorRedDarkPlus);
+    color: white;
+    transform: translateY(-2rem);
+}
