@@ -23,13 +23,19 @@
             </li> -->
         
     </div>
-    <p class="errorTypeFile"></p>
+    <p *ngIf="errorTypeFile.length > 0" class="errorTypeFile">{{errorTypeFile}}</p>
 </section>
 
 <section class="reportSection">
-    <aside *ngIf="clientListFEC && clientListFEC[0]" class="reportContainer ">
-        <div class="reportFeedback"></div>
-        <div class="reportFeedback1"></div>
+    <aside *ngIf="clientFile" class="reportContainer ">
+        <div class="reportFeedback">
+            <h2 class="reportContainer--h2">Compte rendu {{clientFile.name}}</h2>
+        </div>
+        <div class="reportFeedback1">
+            <p>Structure du fichier :</p>
+            <p></p>
+            
+        </div>
         <div class="reportFeedback2"></div>
     </aside>
 </section>
