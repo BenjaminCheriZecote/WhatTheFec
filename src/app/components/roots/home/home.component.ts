@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { articleHome } from '../../helpers/types/articleHome';
+import { ArticleHome } from '../../helpers/types/ArticleHome';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -10,7 +10,7 @@ import { NgFor } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  articlesHome:articleHome[];
+  articlesHome:ArticleHome[];
   
   ngOnInit(): void {
     this.articlesHome = [

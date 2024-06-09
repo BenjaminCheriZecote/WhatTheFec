@@ -7,29 +7,19 @@
         </label>
         <button hidden id="btn">Envoyer</button>
     </form>
-    <div class="progress-area">
-        <!-- <li class="row">
-            <i class='bx bxs-file-blank'></i>
-            <div class="content">
-                <div class="details">
-                    <span class="name">fec_test.txt</span>
-                    <span class="percent">50%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-            </div>
-            <p>Télécharger</p>
-            </li> -->
-        
-    </div>
+    <ul *ngIf="this.fecs.length > 0" class="progress-area">
+        <li *ngFor="let fec of this.fecs"  >
+            <app-data-fec-file [fec]="fec"/>
+        </li>
+    </ul>
+    <button (click)="testButton()">Click</button>
     <p *ngIf="errorTypeFile.length > 0" class="errorTypeFile">{{errorTypeFile}}</p>
 </section>
 
 <section class="reportSection">
-    <aside *ngIf="clientFile" class="reportContainer ">
+    <aside *ngIf="fec && fec.file" class="reportContainer ">
         <div class="reportFeedback">
-            <h2 class="reportContainer--h2">Compte rendu {{clientFile.name}}</h2>
+            <h2 class="reportContainer--h2">Compte rendu {{fec.file.name}}</h2>
         </div>
         <div class="reportFeedback1">
             <p>Structure du fichier :</p>
