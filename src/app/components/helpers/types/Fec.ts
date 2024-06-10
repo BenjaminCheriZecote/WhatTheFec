@@ -3,6 +3,7 @@ export class Fec {
     file:File|null;
     reportControllFile:ReportControllFile;
     reportControllContent:ReportControllContent;
+    workbook:any;
 } 
 export class ReportControllFile {
     headerColumns:string;
@@ -14,3 +15,4 @@ export class ReportControllContent {
     checkDatesColumns:string;
     checkBalancePiece:string;
 }
+

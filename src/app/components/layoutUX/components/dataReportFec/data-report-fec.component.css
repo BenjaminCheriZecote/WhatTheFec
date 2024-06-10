@@ -1,0 +1,16 @@
+.reportTitle {
+    font-size: 1.5rem;
+}
+
+.reportTitle, .reportFeedback {
+    padding:1rem;
+}
+
+.reportFeedback p {
+    margin:0.5rem 0rem;
+    white-space: pre-line;
+}
+
+.feedbackTitle {
+    text-decoration: underline;
+}

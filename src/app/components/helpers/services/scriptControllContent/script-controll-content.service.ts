@@ -16,9 +16,9 @@ export class ScriptControllContentService {
     }
 
     searchEmptyNumPiece = (ws:any) => {
+        let messageError:string = '';
         const rowsError:string[]= [];
         ws.eachRow((row:any, rowNumber:any) => {
-            // console.log('Row ' + rowNumber + ' = ' + row.values);
             if (row.values[3] === '') {
                 row.fill = {
                     type: 'pattern',
@@ -34,12 +34,12 @@ export class ScriptControllContentService {
                 rowsError.push(rowNumber);
             }
         });
-        const messageError = `Vous avez des écritures sans numéro de pièces à la ligne : </br> ${rowsError.join('</br>')}`;
-        console.log(messageError);
+        if (rowsError.length) messageError = `Vous avez des écritures sans numéro de pièces à la ligne : \n ${rowsError.join('\n')}`;
         return messageError;
     }
 
     searchAlonePieceIsolateDate = (ws:any) => {
+        let messageError:string = '';
         const rowsErrorIsolatePieces = [];
         const rowsErrorIsolateDates = [];
 
@@ -153,12 +153,13 @@ export class ScriptControllContentService {
 
         const rowsErrorIsolatePiecesSorted = [...new Set(rowsErrorIsolatePieces)];
 
-        const messageError = `Vous avez une ligne d'écriture isolé à la ligne : </br> ${rowsErrorIsolatePiecesSorted.join('</br>')} </br></br>Vous avez une date d'écriture différente sur une même pièce à la ligne : </br>${rowsErrorIsolateDates.join('</br>')}`
-        console.log(messageError);
+        if (rowsErrorIsolatePieces.length) messageError = `Vous avez une ligne d'écriture isolé à la ligne : \n ${rowsErrorIsolatePiecesSorted.join('\n')}`
+        if (rowsErrorIsolateDates.length) messageError = messageError + `\n\nVous avez une date d'écriture différente sur une même pièce à la ligne : \n${rowsErrorIsolateDates.join('\n')}`
         return messageError;
     }
 
     checkDatesColumns = (ws:any) => {
+        let messageError:string = '';
         const rowsError:string[] = []
         ws.eachRow((row:any, rowNumber:any) => {
             if (row.values[4] !== row.values[10]) {
@@ -181,8 +182,7 @@ export class ScriptControllContentService {
             }
         })
 
-        const messageError = `Les dates des colonnes EcritureDate et PieceDate ne correspondent pas à la ligne : </br>${rowsError.join('</br>')}`;
-        console.log(messageError);
+        if (rowsError.length) messageError = `Les dates des colonnes EcritureDate et PieceDate ne correspondent pas à la ligne : \n${rowsError.join('\n')}`
         return messageError;
     }
 
@@ -191,6 +191,7 @@ export class ScriptControllContentService {
     // },
 
     checkBalancePiece = (body:any, ws2:any) => {
+        let messageError = '';
         const objectPieces:any = {};
         const rowsError:string[] = [];
 
@@ -214,8 +215,7 @@ export class ScriptControllContentService {
         unbalancedPieces.unshift(['Ligne', 'JournalCode', 'EcritureNum', 'Debit', 'Credit', 'Ecarts']);
         ws2.addRows(unbalancedPieces);
         
-        const messageError = `Vous avez des pièces déséquilibrées aux lignes : </br>${rowsError.join('</br>')}`;
-        console.log(messageError);
+        if (rowsError.length) messageError = `Vous avez des pièces déséquilibrées aux lignes : \n${rowsError.join('\n')}`;
         return messageError;
     }
   

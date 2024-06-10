@@ -3,29 +3,18 @@
         <header>File uploader JavaScript</header>
         <i class='bx bx-cloud-download'></i>
         <label for="inputFile">
-            <input #file id="inputFile" type="file" accept=".txt, .csv" hidden (change)="getFile()">
+            <input #file id="inputFile" type="file" accept=".txt, .csv" hidden (change)="getFile(file)">
         </label>
         <button hidden id="btn">Envoyer</button>
     </form>
     <ul *ngIf="this.fecs.length > 0" class="progress-area">
-        <li *ngFor="let fec of this.fecs"  >
-            <app-data-fec-file [fec]="fec"/>
+        <li *ngFor="let fec of this.fecs; let i = index">
+            <app-tag-fec [fec]="fec" class="row" (click)="selectedFec(i)"/>
         </li>
     </ul>
-    <button (click)="testButton()">Click</button>
     <p *ngIf="errorTypeFile.length > 0" class="errorTypeFile">{{errorTypeFile}}</p>
 </section>
 
-<section class="reportSection">
-    <aside *ngIf="fec && fec.file" class="reportContainer ">
-        <div class="reportFeedback">
-            <h2 class="reportContainer--h2">Compte rendu {{fec.file.name}}</h2>
-        </div>
-        <div class="reportFeedback1">
-            <p>Structure du fichier :</p>
-            <p></p>
-            
-        </div>
-        <div class="reportFeedback2"></div>
-    </aside>
+<section *ngIf="this.fec && this.fec.file" class="reportContainer ">
+    <app-data-report-fec [fec]="this.fec"/>
 </section>

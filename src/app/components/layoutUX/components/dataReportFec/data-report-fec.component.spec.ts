@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataFecFileComponent } from './data-fec-file.component';
+import { DataFecFileComponent } from './data-report-fec.component';
 
 describe('DataFecFileComponent', () => {
   let component: DataFecFileComponent;

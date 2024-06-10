@@ -1,28 +1,109 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Fec } from '../../types/Fec';
 import { BehaviorSubject } from 'rxjs';
+import * as ExcelJS from 'exceljs';
+import { ScriptControllContentService } from '../scriptControllContent/script-controll-content.service';
+import { ScriptControllFileService } from '../scriptControllFile/script-controll-file.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FecService {
   private fecs = new BehaviorSubject<Fec[]>([]);
   private fec = new BehaviorSubject<Fec|null>(null);
+  fecs$ = this.fecs.asObservable();
+  fec$ = this.fec.asObservable();
+  reader:FileReader;
+  errorTypeFile:string;
 
-  constructor() { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private scriptControllContent: ScriptControllContentService, 
+    private scriptControllFile: ScriptControllFileService
+  ) { }
 
-  setFecs(value:Fec) : void {
+  setFecs(value:Fec[]) : void {
+    this.fecs.next(value)
+  }
+  addFec = (newFec:Fec) => {
     const currentFecs = this.fecs.getValue();
-    this.fecs.next([...currentFecs, value])
+    this.fecs.next([...currentFecs, newFec])
   }
   getFecs() : any {
-    return this.fecs.asObservable();
+    return this.fecs.getValue();
   }
 
-  setFec(value:Fec) : void {
-    this.fec.next(value);
-  }
-  getFec() : any {
-    return this.fec.asObservable();
+  getFile = (inputFileElement:any) => {
+    if (isPlatformBrowser(this.platformId)) {
+
+      console.log("File selected");
+  
+      const selectedFile = inputFileElement.files[0];
+  
+      if (selectedFile.type !== 'text/plain') return this.errorTypeFile = 'Veuillez sélectionner un fichier de type text';
+  
+      this.errorTypeFile = '';
+      this.reader = new FileReader();
+      
+      this.reader.addEventListener('load', async () => {
+        const textContent = this.reader.result;
+        // création d'un nouveau fichier excel / workbook
+        const wb:ExcelJS.Workbook = new ExcelJS.Workbook();
+        // ajout d'une feuille de calcul dans le workbook
+        const ws:ExcelJS.Worksheet = wb.addWorksheet('Fichier Control');
+        // ajout d'une seconde feuille de calcul
+        const ws2:ExcelJS.Worksheet = wb.addWorksheet('Debit Credit');
+
+        if (typeof textContent === 'string') {
+          // chaque ligne du fichier est stockée dans un tableau 'lines', grâce au retour à la ligne fu fichier
+          const lines = textContent && textContent.split('\n');
+          // chaque élément de 'lines' est parcellisé pour obtenir les données de chaque colonnes grâce à la tabulatipn du fichier
+          const data = Array.isArray(lines) ? lines.map(line => line.split('\t')) : [] as string[][];
+          // le premier élément du tableau 'data', constitue la première ligne du fichier, soit les en-têtes des colonnes 
+          const header:string[] = data[0];
+
+          // le cors du fichier, sans les en-têtes, est récupéré dans protoBody
+          const protoBody: (string | number)[][] = data.slice(1);
+          // protoBody est d'abord trié
+          this.scriptControllContent.sortData(protoBody);
+
+          // puis les données des colonnes débit et crédit sont convertis en nombre. Le résultat est stocké dans body
+          const body = protoBody.map( line => {
+              const modifiedLine = [...line];
+              modifiedLine[11] = parseInt(modifiedLine[11] as string, 10);
+              modifiedLine[12] = parseInt(modifiedLine[12] as string, 10);
+              return modifiedLine;
+          });
+
+          // Ajout des données dans la première feuille de calcul feuille de calcul
+          ws.addRows(body);
+
+          const newFec: Fec = {
+            file: selectedFile,
+            reportControllFile: {
+              headerColumns: this.scriptControllFile.headerColumns(header)
+            },
+            reportControllContent: {
+              searchEmptyNumPiece: this.scriptControllContent.searchEmptyNumPiece(ws),
+              searchAlonePieceIsolateDate: this.scriptControllContent.searchAlonePieceIsolateDate(ws),
+              checkDatesColumns: this.scriptControllContent.checkDatesColumns(ws),
+              checkBalancePiece: this.scriptControllContent.checkBalancePiece(body, ws2)
+            },
+            workbook:wb
+          };
+
+          this.addFec(newFec);
+          this.fec.next(newFec);
+
+        }
+  
+        
+      });
+      // lecture du fichier, permettant ainsi l'observation des données.
+      this.reader.readAsText(selectedFile);
+    
+    }
+    return 
   }
 }
