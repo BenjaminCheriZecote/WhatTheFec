@@ -5,7 +5,7 @@
     /* border:1px black solid; */
     width:100%;
     align-items: stretch;
-    
+    cursor: pointer;
   }
 
   .details span {
@@ -17,7 +17,7 @@
     height:0.5rem;
     /* border: 1px black solid; */
     border-radius: 2rem;
-    background-color: white;
+    background-color: var(--colorWhite);
   }
 
   .progress {
@@ -29,21 +29,21 @@
   }
 
   .bx {
-    color: rgb(103, 119, 168);
+    color: var(--colorIconLogoFec);
   }
 
   .btn {
     font-family: 'Poppins', sans-serif;
-    background: rgb(255, 255, 255);
+    background-color: var(--colorRed);
+    color:var(--colorWhite);
     border-radius: .3rem;
-    
-    border:1px black solid;
+    border:1px var(--colorWhite) solid;
     transition-duration: 1s;
     transition-property: border-top, border-left, border-bottom, border-right, box-shadow;
    }
    
    .btn:hover {
-    color: var(--colorRedDarkPlus);
+    /* color: var(--colorRedDarkPlus); */
     border-top: 1px solid rgb(116, 23, 37);
     border-left: 1px solid var(--colorRedDarkPlus);
     border-bottom: 1px solid var(--colorRedDarkPlus);

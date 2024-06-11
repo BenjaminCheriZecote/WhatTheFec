@@ -1,4 +1,10 @@
 .header {
+    color:var(--colorRedStrong);
+    position:sticky;
+    top:0;
+}
+
+.headerHome {
     background-image: url('/pexels-moose-photos-1587014.webp');
     background-size: cover;
     background-repeat: no-repeat;
@@ -30,7 +36,6 @@
 }
 
 .headerNavLink a {
-    color: rgb(255, 0, 0);
     font-weight: 500;
     text-decoration: none;
     background: transparent;
@@ -39,12 +44,32 @@
     overflow: hidden;
 }
 
+.headerNavLink a:hover {
+    color:var(--colorRedDark)
+}
 
-.headerSection h1 {
+
+.headerHomeTitle {
     font-size: 7rem;
-    color: rgb(255, 0, 0);
-    /* font-family: 'Edu TAS Beginner', cursive; */
     font-family: 'Caveat', cursive;
     font-weight: 700;
     margin:0;
+}
+
+.headerTitle {
+    font-size:1rem;
+    font-family:'Poppins', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    
+}
+
+.scrollHeader {
+    background-color: #f1f2f4;
+    box-shadow: 0px 4px 3px 0px rgb(125, 93, 93);
+}
+
+.scrollLink {
+    color:var(--colorRedDark);
+    transition: ease-in-out;
 }

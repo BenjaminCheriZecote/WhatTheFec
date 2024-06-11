@@ -25,13 +25,13 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+a {
+	color:inherit
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
-}
-body {
-	line-height: 1;
 }
 ol, ul {
 	list-style: none;
@@ -54,13 +54,24 @@ body {
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
+	position:relative;
 }
 
 :root{
+	--colorRedStrong: rgb(255, 0, 0);
     --colorRed: rgb(200, 34, 34);
     --colorRedDark:rgb(120, 18, 18);
     --colorRedDarkPlus: rgb(85, 13, 13);
     --colorIconHome:#bccae2;
+	--colorIconLogoFec: rgb(103, 119, 168);
     --colorBoxShadow:rgb(205, 205, 205);
+	--colorWhite:rgb(255, 255, 255);
+}
+
+#appRoot {
+	height: 100%;
+	display:flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 

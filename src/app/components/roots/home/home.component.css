@@ -37,13 +37,11 @@
     font-size: 2rem;
     font-weight: 600;
     color:var(--colorRedDark);
-    color: var(--colorRedDarkPlus);;
+    color: var(--colorRedDarkPlus);
 }
 
 .bx {
     font-size: 2rem;
-    color: var(--colorIconHome);;
-    color:var(--colorRedDark);
     color: var(--colorRed);
 }
 
@@ -54,6 +52,6 @@
 
 .homeArticle:hover {
     background-color: var(--colorRedDarkPlus);
-    color: white;
+    color: var(--colorWhite);
     transform: translateY(-2rem);
 }

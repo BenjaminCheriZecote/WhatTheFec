@@ -5,7 +5,6 @@ import { ScriptControllFileService } from '../../helpers/services/scriptControll
 import { StorageServiceService } from '../../helpers/services/storageService/storage-service.service';
 import { TagFecComponent } from '../../layoutUX/components/tagFec/tag-fec.component';
 import { DataFecFileComponent } from '../../layoutUX/components/dataReportFec/data-report-fec.component';
-import * as ExcelJS from 'exceljs';
 import { Fec } from '../../helpers/types/Fec';
 import { FecService } from '../../helpers/services/sharedServices/fecs.service';
 
