@@ -73,3 +73,15 @@
     color:var(--colorRedDark);
     transition: ease-in-out;
 }
+
+@media (max-width: 600px) {
+    /* -> dès que la taille d’écran au moins 576px, on change de couleur */
+    
+    .headerHomeTitle  {
+        font-size:5rem;
+    }
+
+    .headerTitle {
+        font-size:1rem;
+    }
+}

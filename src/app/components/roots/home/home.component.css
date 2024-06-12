@@ -26,12 +26,17 @@
     flex-flow: column nowrap;
     gap: 1.4rem;
     width: 30%;
+    max-width: 20rem;
     padding: 2rem 1.4rem 3rem 1.4rem;
     border-radius: 0.3rem;
     box-shadow:5px 5px 15px 5px  var(--colorBoxShadow);
     transition: .2s ease-in-out;
 }
 
+.homeArticle h3, .homeArticle p {
+    line-height: 1.3rem;
+}
+    
 
 .homeSection h2 {
     font-size: 2rem;
@@ -56,3 +61,33 @@
     color: var(--colorWhite);
     transform: translateY(-2rem);
 }
+
+@media (max-width: 781px) {
+    /* -> dès que la taille d’écran au moins 576px, on change de couleur */
+    
+    .homeArticleContainer {
+        flex-flow: row wrap;
+    }
+}
+
+@media (max-width: 630px) {
+    /* -> dès que la taille d’écran au moins 576px, on change de couleur */
+    .homeArticleContainer {
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .homeArticle {
+        width: 60%;
+    }
+
+    .homeArticle h3 {
+        font-size: 1.1rem;
+    }
+
+    .homeArticle p {
+        font-size: 0.8rem;
+    }
+
+  }
+
