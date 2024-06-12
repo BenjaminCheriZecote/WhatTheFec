@@ -55,13 +55,20 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
 	position:relative;
+	background: linear-gradient(var(--colorWhite), rgba(241, 242, 244, 0.8), var(--colorWhite));
 }
+
+body::-webkit-scrollbar {
+	display: none;
+}
+  
 
 :root{
 	--colorRedStrong: rgb(255, 0, 0);
     --colorRed: rgb(200, 34, 34);
     --colorRedDark:rgb(120, 18, 18);
     --colorRedDarkPlus: rgb(85, 13, 13);
+	--colorBlueDark:rgb(7, 10, 59);
     --colorIconHome:#bccae2;
 	--colorIconLogoFec: rgb(103, 119, 168);
     --colorBoxShadow:rgb(205, 205, 205);
@@ -73,5 +80,10 @@ body {
 	display:flex;
 	flex-direction: column;
 	justify-content: space-between;
+}
+
+
+#main {
+	padding: 0rem 2.7rem;
 }
 

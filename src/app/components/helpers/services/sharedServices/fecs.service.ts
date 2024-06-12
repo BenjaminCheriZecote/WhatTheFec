@@ -12,8 +12,10 @@ import { ScriptControllFileService } from '../scriptControllFile/script-controll
 export class FecService {
   private fecs = new BehaviorSubject<Fec[]>([]);
   private fec = new BehaviorSubject<Fec|null>(null);
+  private percentLoaded = new BehaviorSubject<number>(0);
   fecs$ = this.fecs.asObservable();
   fec$ = this.fec.asObservable();
+  percentLoaded$ = this.percentLoaded.asObservable();
   reader:FileReader;
   errorTypeFile:string;
 
@@ -34,7 +36,7 @@ export class FecService {
     return this.fecs.getValue();
   }
 
-  getFile = (inputFileElement:any) => {
+  getFile = async (inputFileElement:any) => {
     if (isPlatformBrowser(this.platformId)) {
 
       console.log("File selected");
@@ -45,6 +47,8 @@ export class FecService {
   
       this.errorTypeFile = '';
       this.reader = new FileReader();
+
+      this.reader.addEventListener('progress', this.updateProgress);
       
       this.reader.addEventListener('load', async () => {
         const textContent = this.reader.result;
@@ -106,4 +110,13 @@ export class FecService {
     }
     return 
   }
+
+  // Fonction pour mettre à jour la progression
+updateProgress = (event: ProgressEvent<FileReader>) => {
+  if (event.lengthComputable) {
+    const percentProgress = Math.round((event.loaded / event.total) * 100);
+    this.percentLoaded.next(percentProgress);
+    console.log(`Progress: ${percentProgress}%`); 
+  }
+}
 }

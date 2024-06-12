@@ -1,7 +1,7 @@
 <section class="fileSection">
     <form #form method="post" action="/test" id="formFile" (click)="findFile()">
-        <header>File uploader JavaScript</header>
-        <i class='bx bx-cloud-download'></i>
+        <header>Sélectionner votre fichier.</header>
+        <i class='bx bx-cloud-download bx-lg' ></i>
         <label for="inputFile">
             <input #file id="inputFile" type="file" accept=".txt, .csv" hidden (change)="getFile(file)">
         </label>

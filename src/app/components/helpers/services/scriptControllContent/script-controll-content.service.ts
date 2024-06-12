@@ -12,6 +12,9 @@ export class ScriptControllContentService {
             return a[0].localeCompare(b[0]);
         }
     } );
+    // si le trie fait remonter une ligne vide en début de fichier, elle est supprimée
+    // cas fréquent des fichier .txt ou un retour à la ligne est parfois laissé en fin de fichier
+    if (protoBody[0].length!) protoBody.splice(0, 1);
     return protoBody;
     }
 
@@ -34,7 +37,7 @@ export class ScriptControllContentService {
                 rowsError.push(rowNumber);
             }
         });
-        if (rowsError.length) messageError = `Vous avez des écritures sans numéro de pièces à la ligne : \n ${rowsError.join('\n')}`;
+        if (rowsError.length) messageError = `Vous avez des écritures sans numéro de pièces : ${rowsError.length} ligne(s).`;
         return messageError;
     }
 
@@ -49,7 +52,7 @@ export class ScriptControllContentService {
                 pattern: 'solid',
                 fgColor: { argb: 'FFF1F2F4' }
             };
-
+            
             ws._rows[0]._cells[2].font = {
                 color: { argb: 'ffe74141' },
                 bold: true
@@ -153,8 +156,8 @@ export class ScriptControllContentService {
 
         const rowsErrorIsolatePiecesSorted = [...new Set(rowsErrorIsolatePieces)];
 
-        if (rowsErrorIsolatePieces.length) messageError = `Vous avez une ligne d'écriture isolé à la ligne : \n ${rowsErrorIsolatePiecesSorted.join('\n')}`
-        if (rowsErrorIsolateDates.length) messageError = messageError + `\n\nVous avez une date d'écriture différente sur une même pièce à la ligne : \n${rowsErrorIsolateDates.join('\n')}`
+        if (rowsErrorIsolatePieces.length) messageError = `Vous avez ${rowsErrorIsolatePiecesSorted.length} ligne(s) d'écriture(s) isolé(es).\n`
+        if (rowsErrorIsolateDates.length) messageError = messageError + `Vous avez une date d'écriture différente sur une même pièce : ${rowsErrorIsolateDates.length} ligne(s).`
         return messageError;
     }
 
@@ -182,7 +185,7 @@ export class ScriptControllContentService {
             }
         })
 
-        if (rowsError.length) messageError = `Les dates des colonnes EcritureDate et PieceDate ne correspondent pas à la ligne : \n${rowsError.join('\n')}`
+        if (rowsError.length) messageError = `Les dates des colonnes EcritureDate et PieceDate ne correspondent pas : ${rowsError.length} ligne(s).`
         return messageError;
     }
 
@@ -215,7 +218,7 @@ export class ScriptControllContentService {
         unbalancedPieces.unshift(['Ligne', 'JournalCode', 'EcritureNum', 'Debit', 'Credit', 'Ecarts']);
         ws2.addRows(unbalancedPieces);
         
-        if (rowsError.length) messageError = `Vous avez des pièces déséquilibrées aux lignes : \n${rowsError.join('\n')}`;
+        if (rowsError.length) messageError = `Vous avez des pièces déséquilibrées : ${rowsError.length} ligne(s).`;
         return messageError;
     }
   

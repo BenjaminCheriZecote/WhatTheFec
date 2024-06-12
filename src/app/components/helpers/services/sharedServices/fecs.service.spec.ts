@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FecsService } from './fecs.service';
+import { FecService } from './fecs.service';
 
 describe('FecsService', () => {
-  let service: FecsService;
+  let service: FecService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FecsService);
+    service = TestBed.inject(FecService);
   });
 
   it('should be created', () => {

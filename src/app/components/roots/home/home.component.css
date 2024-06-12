@@ -38,6 +38,7 @@
     font-weight: 600;
     color:var(--colorRedDark);
     color: var(--colorRedDarkPlus);
+    color:var(--colorBlueDark);
 }
 
 .bx {

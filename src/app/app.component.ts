@@ -10,6 +10,5 @@ import { FooterComponent } from './components/partials/footer/footer.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'WTF';
-}
+export class AppComponent {}
+

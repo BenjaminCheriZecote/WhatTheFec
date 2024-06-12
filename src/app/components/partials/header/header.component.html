@@ -1,11 +1,11 @@
 <header [class.headerHome]="isHome">
-    <section #header class="headerSection header">
-        <h1 #h1 [ngClass]="{ 'headerHomeTitle': isHome, 'headerTitle':!isHome }" id="headerTitle">What the FEC!</h1>
+    <section #header class="headerSection header" [class.headerBis]="!isHome">
+        <h1 #h1 [ngClass]="{ 'headerHomeTitle': isHome, 'headerTitle':!isHome }" >What the FEC!</h1>
         <nav>
             <ul class="headerNavLinkContainer">
                 <li class="headerNavLink"><a routerLink="/">Acceuil</a></li>
                 <li class="headerNavLink"><a #testingLink routerLink="/testing">Tester mon FEC</a></li>
-                <li class="headerNavLink"><a routerLink="#">Conformité légale</a></li>
+                <li class="headerNavLink"><a routerLink="/policy">Conformité légale</a></li>
             </ul>
         </nav>
     </section>

@@ -36,11 +36,11 @@ export class HeaderComponent implements OnInit{
 
   scrollHeader = () => {
     if (window.scrollY > 1) {
-      this.renderer.addClass(this.headerElement.nativeElement, 'scrollHeader');
+      if (this.isHome) this.renderer.addClass(this.headerElement.nativeElement, 'headerBis');
       this.renderer.addClass(this.h1Element.nativeElement, 'headerTitle');
     } else {
-      this.renderer.removeClass(this.headerElement.nativeElement, 'scrollHeader');
-      this.renderer.removeClass(this.h1Element.nativeElement, 'headerTitle');
+      if (this.isHome) this.renderer.removeClass(this.headerElement.nativeElement, 'headerBis');
+      if (this.isHome) this.renderer.removeClass(this.h1Element.nativeElement, 'headerTitle');
     }
 
     if (window.scrollY >= 560) {

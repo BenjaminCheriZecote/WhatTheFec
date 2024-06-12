@@ -8,6 +8,11 @@ export const routes: Routes = [
     {
         path:'testing',
         loadComponent:( ) => import('../components/roots/testing/testing.component').then(module => module.TestingComponent)
+    },
+    {
+        path:'policy',
+        loadComponent:( ) => import('../components/roots/policy/policy.component').then(module => module.PolicyComponent)
     }
+    
 
 ];

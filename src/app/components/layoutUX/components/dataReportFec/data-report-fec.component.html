@@ -11,4 +11,12 @@
     <p *ngIf="fec.reportControllContent.searchAlonePieceIsolateDate.length">{{fec.reportControllContent.searchAlonePieceIsolateDate}}</p>
     <p *ngIf="fec.reportControllContent.checkDatesColumns.length">{{fec.reportControllContent.checkDatesColumns}}</p>
     <p *ngIf="fec.reportControllContent.checkBalancePiecelength">{{fec.reportControllContent.checkBalancePiece}}</p>
+    <p *ngIf="
+        fec.reportControllContent.searchEmptyNumPiece.length! && 
+        fec.reportControllContent.searchAlonePieceIsolateDate.length! &&
+        fec.reportControllContent.checkDatesColumns.length! &&
+        fec.reportControllContent.checkBalancePiecelength!
+    ">
+        La strucutre de vos écritures comptables sont correctes.
+    </p>
 </div>
