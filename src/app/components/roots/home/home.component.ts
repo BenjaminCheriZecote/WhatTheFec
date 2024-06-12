@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleHome } from '../../helpers/types/ArticleHome';
+import { ArticleHome } from '../../helpers/types/articleHome';
 import { NgFor } from '@angular/common';
 
 @Component({
