@@ -2,11 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, Inject, PLATFORM_ID, AfterVie
 import { NgIf, NgFor, isPlatformBrowser } from '@angular/common';
 import { ScriptControllContentService } from '../../helpers/services/scriptControllContent/script-controll-content.service';
 import { ScriptControllFileService } from '../../helpers/services/scriptControllFile/script-controll-file.service';
-import { StorageServiceService } from '../../helpers/services/storageService/storage-service.service';
 import { TagFecComponent } from '../../layoutUX/components/tagFec/tag-fec.component';
 import { DataFecFileComponent } from '../../layoutUX/components/dataReportFec/data-report-fec.component';
 import { Fec } from '../../helpers/types/Fec';
-import { FecService } from '../../helpers/services/sharedServices/fecs.service';
+import { FecService } from '../../helpers/services/fecService/fecs.service';
 
 @Component({
   selector: 'app-testing',
@@ -20,7 +19,7 @@ export class TestingComponent implements OnInit{
 
   errorTypeFile:string;
   reader:FileReader;
-  fecs:Fec[];
+  fecs:(Fec | File)[];
   fec:Fec|null;
   
 
@@ -29,9 +28,6 @@ export class TestingComponent implements OnInit{
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object, 
-    private scriptControllContent : ScriptControllContentService, 
-    private scriptControllFile : ScriptControllFileService, 
-    private storageService : StorageServiceService,
     private fecService:FecService, 
   ) {}
 
@@ -47,18 +43,22 @@ export class TestingComponent implements OnInit{
     
   }
 
-
   findFile = () => {
     this.inputFileElement.nativeElement.click();
   }
 
   getFile = (input:any) => {
     this.fecService.getFile(input);
+    this.fecService.resetPercentLoaded();
+    this.inputFileElement.nativeElement.value = '';
   }
 
-  selectedFec = (indexFec:number) => {
+  selectedFec = (event:Event, indexFec:number) => {
     const foundFec = this.fecService.getFecs().find((fec:Fec, index:number) => index === indexFec);
-    this.fec = foundFec;
+    if (foundFec) {
+      this.fec = foundFec;
+      this.fecService.setSelectedFec(event);
+    }
   }
 
 }

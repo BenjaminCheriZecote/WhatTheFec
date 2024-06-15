@@ -1,12 +1,16 @@
 
-<i class='bx bxs-file-blank'></i>
+<loaderIcon width="1.5rem" *ngIf="!loaded"/>
+<fileIcon *ngIf="loaded"/>
+
 <div class="content">
     <div class="details">
         <span class="name">{{fec.file.name}}</span>
-        <span class="percent">{{percentLoaded}}%</span>
+        <span class="percent">{{loaded?100:percentLoaded}}%</span>
     </div>
-    <div class="progress-bar">
-        <div #progressLoaded class="progress"></div>
-    </div>
+    <progress #progressLoaded max="100" [value]="loaded?100:percentLoaded" class="progress progress-bar">{{percentLoaded}}%</progress>
 </div>
-<button #btn class="btn" (click)="listenerButtonUploader(fec.file.name, fec.workbook)">Télécharger</button>
+<div class="contentOptions">
+    <button #btn class="btn" (click)="listenerButtonUploader(fec.file.name, fec.workbook)">Télécharger</button>
+    <deleteIcon width="1rem" (click)="removeFec()" class="deleteIcon"/>
+</div>
+

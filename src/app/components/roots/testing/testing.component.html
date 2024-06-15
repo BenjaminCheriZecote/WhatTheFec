@@ -9,7 +9,7 @@
     </form>
     <ul *ngIf="this.fecs.length > 0" class="progress-area">
         <li *ngFor="let fec of this.fecs; let i = index">
-            <app-tag-fec [fec]="fec" class="row" (click)="selectedFec(i)"/>
+            <app-tag-fec [fec]="fec" [indexFec]="i" class="row" (click)="selectedFec($event, i)"/>
         </li>
     </ul>
     <p *ngIf="errorTypeFile.length > 0" class="errorTypeFile">{{errorTypeFile}}</p>

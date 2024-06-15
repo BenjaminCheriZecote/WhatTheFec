@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FecService } from '../../../helpers/services/sharedServices/fecs.service';
+import { FecService } from '../../../helpers/services/fecService/fecs.service';
 
 @Component({
   selector: 'app-data-report-fec',
@@ -15,6 +15,4 @@ export class DataFecFileComponent {
   constructor(
     private fecService:FecService, 
   ) {}
-
-
 }

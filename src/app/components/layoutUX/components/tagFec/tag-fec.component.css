@@ -1,51 +1,61 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    gap:0.5rem;
-    /* border:1px black solid; */
-    width:100%;
-    align-items: stretch;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  gap:0.5rem;
+  /* border:1px black solid; */
+  width:100%;
+  align-items: stretch;
+  cursor: pointer;
+}
 
-  .details span {
-    margin-right: 0.5rem;
-  }
+.details span {
+  margin-right: 0.5rem;
+}
 
-  .progress-bar {
-    width: 100%;
-    height:0.5rem;
-    border: none;
-    border-radius: 2rem;
-    background-color: var(--colorWhite);
-  }
+.progress {
+  /* background-color: rgb(182, 184, 192); */
+  height:0.5rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2rem;
+}
 
-  .progress {
-    background-color: rgb(182, 184, 192);
-    height:0.5rem;
-    overflow: hidden;
-    border-radius: inherit;
-  }
+.progress-bar {
+  transition: value 0.5s ease-in-out; /* Durée de 0.5s, ajustez selon vos besoins */
+}
 
-  .bx {
-    color: var(--colorIconLogoFec);
-  }
+.progress-bar::-webkit-progress-value {
+  transition: width 0.5s ease-in-out; /* Pour les navigateurs basés sur Webkit */
+}
 
-  .btn {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--colorRed);
-    color:var(--colorWhite);
-    border-radius: .3rem;
-    border:1px var(--colorRedDark) solid;
-    transition-duration: 1s;
-    transition-property: border-top, border-left, border-bottom, border-right, box-shadow;
-   }
-   
-   .btn:hover {
-    /* color: var(--colorRedDarkPlus); */
-    border-top: 1px solid rgb(116, 23, 37);
-    border-left: 1px solid var(--colorRedDarkPlus);
-    border-bottom: 1px solid var(--colorRedDarkPlus);
-    border-right: 1px solid var(--colorRedDarkPlus);
-    box-shadow: rgba(85, 13, 13, 0.4) 5px 5px, rgba(85, 13, 13, 0.3) 10px 10px, rgba(85, 13, 13, 0.2) 15px 15px;
-   }
+.progress-bar::-moz-progress-bar {
+  transition: width 0.5s ease-in-out; /* Pour les navigateurs basés sur Mozilla */
+}
+
+.progress::-moz-progress-bar { background: rgb(182, 184, 192)}
+.progress::-webkit-progress-value { background: rgb(182, 184, 192) }
+
+.btn {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--colorRed);
+  color:var(--colorWhite);
+  border-radius: .3rem;
+  border:1px var(--colorRedDark) solid;
+  transition-duration: 1s;
+  transition-property: border-top, border-left, border-bottom, border-right, box-shadow;
+  cursor:pointer;
+  padding:0rem 0.2rem;
+}
+  
+.btn:hover {
+  border-top: 1px solid rgb(116, 23, 37);
+  border-left: 1px solid var(--colorRedDarkPlus);
+  border-bottom: 1px solid var(--colorRedDarkPlus);
+  border-right: 1px solid var(--colorRedDarkPlus);
+  box-shadow: rgba(85, 13, 13, 0.4) 5px 5px, rgba(85, 13, 13, 0.3) 10px 10px, rgba(85, 13, 13, 0.2) 15px 15px;
+}
+
+.contentOptions {
+  display:flex;
+  flex-flow: row nowrap;
+}

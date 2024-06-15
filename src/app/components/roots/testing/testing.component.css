@@ -5,7 +5,8 @@
     flex-flow: column;
     justify-content: space-between;
     width:60%;
-    margin: 10rem auto;
+    max-width:35rem;
+    margin: 7rem auto;
     gap:1rem;
     background-color: rgb(255, 255, 255);
     border-radius: 0.8rem;
@@ -14,50 +15,58 @@
     transition: .4s ease-in-out;
   }
 
-  #formFile {
-    display:flex;
-    flex-direction: column;
-    border:1px var(--colorIconLogoFec) dashed;
-    height: 15rem;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
+.reportContainer {
+  margin-bottom: 7rem;
+}
 
-  #formFile header {
-    color:var(--colorIconLogoFec);
-  }
+#formFile {
+  display:flex;
+  flex-direction: column;
+  border:1px var(--colorIconLogoFec) dashed;
+  height: 15rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
-  #formFile i {
-    color:var(--colorIconLogoFec);
-  }
+#formFile header {
+  color:var(--colorIconLogoFec);
+}
 
-  .fileSection:hover {
-    scale: 0.99;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  }
+#formFile i {
+  color:var(--colorIconLogoFec);
+}
 
-  .progress-area {
-    display:flex;
-    flex-flow: column nowrap;
-    gap:0.3rem;
-  }
+.fileSection:hover {
+  scale: 0.99;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
 
-  .row {
-    list-style-type: none;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    gap:2rem;
-    background-color: rgb(223, 226, 233);
-    border-radius:0.3rem;
-    padding:0.5rem;
-  }
+.progress-area {
+  display:flex;
+  flex-flow: column nowrap;
+  gap:0.3rem;
+}
 
-  #header_section-h1 {
-    font-size:1rem;
-  }
+.row {
+  list-style-type: none;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap:2rem;
+  background-color: rgb(223, 226, 233);
+  border-radius:0.3rem;
+  padding:0.5rem;
+}
 
-  .hidden {
-    display: none;
-  }
+.selected {
+  border-left: 5px var(--colorIconLogoFec) solid;
+}
+
+#header_section-h1 {
+  font-size:1rem;
+}
+
+.hidden {
+  display: none;
+}
