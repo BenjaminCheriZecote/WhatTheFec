@@ -14,7 +14,7 @@ export class ScriptControllContentService {
     } );
     // si le trie fait remonter une ligne vide en début de fichier, elle est supprimée
     // cas fréquent des fichier .txt ou un retour à la ligne est parfois laissé en fin de fichier
-    if (protoBody[0].length!) protoBody.splice(0, 1);
+    if (!protoBody[0].length) protoBody.splice(0, 1);
     return protoBody;
     }
 
@@ -193,32 +193,54 @@ export class ScriptControllContentService {
 
     // },
 
-    checkBalancePiece = (body:any, ws2:any) => {
+    checkBalancePiece = (header:any, body:any, ws2:any) => {
         let messageError = '';
         const objectPieces:any = {};
         const rowsError:string[] = [];
 
-        body.forEach(([JournalCode, JournalLib, EcritureNum, EcritureDate, CompteNum, CompteLib, CompAuxNum, CompAuxLib, PieceRef, PieceDate, EcritureLib, Debit, Credit, EcritureLet, DateLet, ValidDate, Montantdevise, Idevise]:string|number[], index:number) => {
-            if (objectPieces.hasOwnProperty(`${JournalCode}${EcritureNum}`)) {
-                objectPieces[`${JournalCode}${EcritureNum}`][3] += Debit;
-                objectPieces[`${JournalCode}${EcritureNum}`][4] += Credit;
-                objectPieces[`${JournalCode}${EcritureNum}`][5] = objectPieces[`${JournalCode}${EcritureNum}`][3] - objectPieces[`${JournalCode}${EcritureNum}`][4];
+        if (header[11] === 'Debit' && header[12] === 'Credit') {
+            body.forEach(([JournalCode, JournalLib, EcritureNum, EcritureDate, CompteNum, CompteLib, CompAuxNum, CompAuxLib, PieceRef, PieceDate, EcritureLib, Debit, Credit, EcritureLet, DateLet, ValidDate, Montantdevise, Idevise]:string|number[], index:number) => {
+                if (objectPieces.hasOwnProperty(`${JournalCode}${EcritureNum}`)) {
+                    objectPieces[`${JournalCode}${EcritureNum}`][3] += Debit;
+                    objectPieces[`${JournalCode}${EcritureNum}`][4] += Credit;
+                    objectPieces[`${JournalCode}${EcritureNum}`][5] = objectPieces[`${JournalCode}${EcritureNum}`][3] - objectPieces[`${JournalCode}${EcritureNum}`][4];
+    
+                } else {
+                    objectPieces[`${JournalCode}${EcritureNum}`] = [index+1, JournalCode, EcritureNum, Debit, Credit, +Debit - +Credit]
+                }
+    
+            });
+        } else if (header[11] === 'Montant' && header[12] === 'Sens') {
+            
+            body.forEach(([JournalCode, JournalLib, EcritureNum, EcritureDate, CompteNum, CompteLib, CompAuxNum, CompAuxLib, PieceRef, PieceDate, EcritureLib, Montant, Sens, EcritureLet, DateLet, ValidDate, Montantdevise, Idevise]:string|number[], index:number) => {
+                let parseSens: number = (typeof Sens === 'string') ? parseInt(Sens, 10) : Sens;
+                let parseMontant: number = (typeof Montant === 'string') ? parseFloat(Montant) : Montant;
+                
+                if (objectPieces.hasOwnProperty(`${JournalCode}${EcritureNum}`)) {
+                    if (parseSens === 1) objectPieces[`${JournalCode}${EcritureNum}`][3] += Montant;
+                    if (parseSens === -1) objectPieces[`${JournalCode}${EcritureNum}`][4] += Montant;
+                    objectPieces[`${JournalCode}${EcritureNum}`][5] = objectPieces[`${JournalCode}${EcritureNum}`][3] - objectPieces[`${JournalCode}${EcritureNum}`][4];
+    
+                } else {
+                    let Debit;
+                    let Credit;
+                    if (parseSens === 1) Debit = parseMontant;
+                    if (parseSens === -1) Credit = parseMontant;
+                    objectPieces[`${JournalCode}${EcritureNum}`] = [index+1, JournalCode, EcritureNum, Debit?Debit:0, Credit?Credit:0, (Debit?Debit:0) - (Credit?Credit:0)]
+                }
+    
+            });
+        }
 
-            } else {
-                objectPieces[`${JournalCode}${EcritureNum}`] = [index+1, JournalCode, EcritureNum, Debit, Credit, +Debit - +Credit]
-            }
-
-        });
 
         const pieces:any[] = Object.values(objectPieces);
-
-        const unbalancedPieces = pieces.filter(piece => piece[5] !== 0);
+        const unbalancedPieces = pieces.filter(piece => piece[3].toFixed(2) !== piece[4].toFixed(2));
         unbalancedPieces.forEach((piece) => rowsError.push(piece[0]));
-
         unbalancedPieces.unshift(['Ligne', 'JournalCode', 'EcritureNum', 'Debit', 'Credit', 'Ecarts']);
         ws2.addRows(unbalancedPieces);
         
         if (rowsError.length) messageError = `Vous avez des pièces déséquilibrées : ${rowsError.length} ligne(s).`;
+        console.log('message error', messageError)
         return messageError;
     }
   

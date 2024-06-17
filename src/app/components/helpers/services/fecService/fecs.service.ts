@@ -85,8 +85,6 @@ export class FecService {
 
       this.errorTypeFile = '';
       this.reader = new FileReader();
-
-      this.reader.addEventListener('progress', this.updateProgress);
       
       this.reader.addEventListener('load', async () => {
         this.percentLoaded.next(1);
@@ -111,21 +109,22 @@ export class FecService {
           const data = Array.isArray(lines) ? lines.map(line => line.split('\t')) : [] as string[][];
           // le premier élément du tableau 'data', constitue la première ligne du fichier, soit les en-têtes des colonnes 
           const header:string[] = data[0];
-
           // le cors du fichier, sans les en-têtes, est récupéré dans protoBody
           const protoBody: (string | number)[][] = data.slice(1);
           // protoBody est d'abord trié
           this.scriptControllContent.sortData(protoBody);
+  
           this.percentLoaded.next(30);
+
           // puis les données des colonnes débit et crédit sont convertis en nombre. Le résultat est stocké dans body
           const body = protoBody.map( line => {
               const modifiedLine = [...line];
-              modifiedLine[11] = parseInt(modifiedLine[11] as string, 10);
-              modifiedLine[12] = parseInt(modifiedLine[12] as string, 10);
+              modifiedLine[11] = this.parseNumber(modifiedLine[11]);
+              modifiedLine[12] = this.parseNumber(modifiedLine[12]);
               return modifiedLine;
           });
           this.percentLoaded.next(50);
-
+         
           // Ajout des données dans la première feuille de calcul feuille de calcul
           ws.addRows(body);
 
@@ -138,7 +137,7 @@ export class FecService {
               searchEmptyNumPiece: this.scriptControllContent.searchEmptyNumPiece(ws),
               searchAlonePieceIsolateDate: this.scriptControllContent.searchAlonePieceIsolateDate(ws),
               checkDatesColumns: this.scriptControllContent.checkDatesColumns(ws),
-              checkBalancePiece: this.scriptControllContent.checkBalancePiece(body, ws2)
+              checkBalancePiece: this.scriptControllContent.checkBalancePiece(header, body, ws2)
             },
             workbook:wb
           };
@@ -160,11 +159,12 @@ export class FecService {
     return 
   }
 
-  // Fonction pour mettre à jour la progression
-updateProgress = (event: ProgressEvent<FileReader>) => {
-  if (event.lengthComputable) {
-    const percentProgress = Math.round((event.loaded / event.total) * 100);
-    this.percentLoaded.next(percentProgress);
-  }
-}
+  parseNumber = (value: string | number): number => {
+    if (typeof value === 'string') {
+      // toFixed(2) retourne une string où les décimales sont arrodins à 2 chiffres après la virgule
+      // ajout d'un second parseFloat pour reconvertir en nombre
+      return parseFloat(parseFloat(value.replace(',', '.')).toFixed(2));
+    }
+    return value;
+  };
 }
