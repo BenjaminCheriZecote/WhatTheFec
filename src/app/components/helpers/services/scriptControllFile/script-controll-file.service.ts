@@ -25,7 +25,7 @@ export class ScriptControllFileService {
         });
 
         if (error.length !== 0) {
-            const messageError = `La strucure du fichier est invalide. Vérifiez l'orhographe du nom de la colonne : ${error}`;
+            const messageError = `La strucure du fichier est invalide. Vérifiez l'orhographe du nom de la colonne : ${error}.`;
             return messageError;
         } else {
             const message = "La structure du fichier est correcte. Le nombre de colonne est autorisée, les entêtes de colonnes correspondent aux attentes légales.";
@@ -44,7 +44,7 @@ export class ScriptControllFileService {
             let result = isEqual(header, structure22);
             return result;
         } else {
-            const messageError = "La strucure du fichier est invalide. Vous ne disposez pas du nombre de colonnes autorisées";
+            const messageError = "La strucure du fichier est invalide. Vous ne disposez pas du nombre de colonnes autorisées.";
             return messageError;
         }
     } else {
@@ -58,7 +58,7 @@ export class ScriptControllFileService {
             let result = isEqual(header, structure22bis);
             return result;
         } else {
-            const messageError = "La strucure du fichier est invalide. Vous ne disposez pas du nombre de colonnes autorisées";
+            const messageError = "La strucure du fichier est invalide. Vous ne disposez pas du nombre de colonnes autorisées.";
             return messageError;
         }
     }

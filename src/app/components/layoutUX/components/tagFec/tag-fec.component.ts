@@ -6,13 +6,14 @@ import { Subscription } from 'rxjs';
 import { FileIconComponent } from '../../icons/fileIcon/file-icon.component';
 import { LoaderIconComponent } from '../../icons/loaderIcon/loader-icon.component';
 import { DeleteIconComponent } from '../../icons/deleteIcon/delete-icon.component';
+import {UploadIconComponent} from '../../icons/uploadIcon/upload-icon.component'
 import { Fec } from '../../../helpers/types/Fec';
 
 
 @Component({
   selector: 'app-tag-fec',
   standalone: true,
-  imports: [NgIf, FileIconComponent, LoaderIconComponent, DeleteIconComponent ],
+  imports: [NgIf, FileIconComponent, LoaderIconComponent, DeleteIconComponent, UploadIconComponent ],
   templateUrl: './tag-fec.component.html',
   styleUrl: './tag-fec.component.css'
 })
@@ -32,6 +33,7 @@ export class TagFecComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.fecService.setSelectedFec(undefined);
     this.fecService.fecs$.subscribe(fecs => {
       this.fecs = fecs;
     })
@@ -44,6 +46,7 @@ export class TagFecComponent implements OnInit{
         if (this.progressLoadedElement && this.progressLoadedElement.nativeElement.value === 100) {
           this.unsubscribeFromPercentLoaded();
           this.loaded = true;
+          this.fecService.turnOffLoading();
         }
       });
     });

@@ -28,7 +28,8 @@ export function app(): express.Express {
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
-
+    // mise en cache
+    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=600');
     commonEngine
       .render({
         bootstrap,

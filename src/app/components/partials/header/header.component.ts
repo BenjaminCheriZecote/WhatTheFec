@@ -1,11 +1,12 @@
-import { NgClass, isPlatformBrowser } from '@angular/common';
+import { NgClass, isPlatformBrowser, NgIf } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
+import {LogoComponent} from '../../layoutUX/logo/logo.component'
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, LogoComponent, NgIf],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -37,10 +38,12 @@ export class HeaderComponent implements OnInit{
   scrollHeader = () => {
     if (window.scrollY > 1) {
       if (this.isHome) this.renderer.addClass(this.headerElement.nativeElement, 'headerBis');
+      if (this.isHome) this.renderer.removeClass(this.h1Element.nativeElement, 'headerHomeTitle');
       this.renderer.addClass(this.h1Element.nativeElement, 'headerTitle');
     } else {
       if (this.isHome) this.renderer.removeClass(this.headerElement.nativeElement, 'headerBis');
       if (this.isHome) this.renderer.removeClass(this.h1Element.nativeElement, 'headerTitle');
+      if (this.isHome) this.renderer.addClass(this.h1Element.nativeElement, 'headerHomeTitle');
     }
 
     if (window.scrollY >= 560) {

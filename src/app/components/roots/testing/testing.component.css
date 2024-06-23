@@ -70,3 +70,25 @@
 .hidden {
   display: none;
 }
+/* Media Query 400px */
+@media (max-width: 400px) {
+  .fileSection header {
+    display:none;
+  }
+  .row{
+    gap:0.5rem;
+  }
+  .content .details .name {
+    font-size:0.8rem;
+  }
+}
+
+/* Media Query 400px */
+@media (max-width: 600px) {
+  .fileSection {
+    width:90%;
+  }
+  .row{
+    gap:1rem;
+  }
+}

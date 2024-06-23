@@ -9,7 +9,7 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
+small, strike, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
@@ -26,14 +26,14 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 a {
-	color:inherit
+	color:inherit;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-ol, ul {
+ul {
 	list-style: none;
 }
 blockquote, q {
@@ -48,7 +48,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
 body {
     font-family: 'Poppins', sans-serif;
     height: 100vh;
@@ -57,33 +56,38 @@ body {
 	position:relative;
 	background: linear-gradient(var(--colorWhite), rgba(241, 242, 244, 0.8), var(--colorWhite));
 }
-
 body::-webkit-scrollbar {
 	display: none;
 }
-  
-
 :root{
 	--colorRedStrong: rgb(255, 0, 0);
     --colorRed: rgb(200, 34, 34);
     --colorRedDark:rgb(120, 18, 18);
     --colorRedDarkPlus: rgb(85, 13, 13);
 	--colorBlueDark:rgb(7, 10, 59);
+	--colorBlueStrong:rgb(6, 11, 104);
     --colorIconHome:#bccae2;
 	--colorIconLogoFec: rgb(103, 119, 168);
     --colorBoxShadow:rgb(205, 205, 205);
 	--colorWhite:rgb(255, 255, 255);
+	--colorBackground: rgba(241, 242, 244, 0.8);
+	--colorBackground2: rgb(195,174,165);
 }
-
 #appRoot {
 	height: 100%;
 	display:flex;
 	flex-direction: column;
 	justify-content: space-between;
+	position:relative;
 }
-
-
-#main {
+/* section {
 	padding: 0rem 2.7rem;
-}
+} */
 
+/* SHARED STYLE COMPONENT */
+.headerTitle {
+    font-family: 'Caveat', cursive;
+    color:var(--colorRedStrong);
+    font-size:1.6rem;
+    font-weight: 700;
+}

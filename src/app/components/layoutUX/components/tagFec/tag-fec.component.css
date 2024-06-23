@@ -59,3 +59,25 @@
   display:flex;
   flex-flow: row nowrap;
 }
+
+.uploadIcon {
+  display:none
+}
+
+/* Media Query 670px */
+@media (max-width: 670px) {
+  .btn span {
+    display:none;
+  }
+  .uploadIcon {
+    display:block
+  }
+  
+}
+
+@media (max-width: 400px) {
+  .content .details .percent {
+    display:none;
+  }
+  
+}

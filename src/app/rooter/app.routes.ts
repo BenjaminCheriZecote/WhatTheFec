@@ -10,9 +10,9 @@ export const routes: Routes = [
         loadComponent:( ) => import('../components/roots/testing/testing.component').then(module => module.TestingComponent)
     },
     {
-        path:'policy',
-        loadComponent:( ) => import('../components/roots/policy/policy.component').then(module => module.PolicyComponent)
-    }
+        path:'**',
+        loadComponent:( ) => import('../components/roots/404/404.component').then(module => module.PageNotFoundComponent)
+    },
     
 
 ];

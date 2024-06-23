@@ -1,36 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ArticleHome } from '../../helpers/types/articleHome';
-import { NgFor } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
   articlesHome:ArticleHome[];
   
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object, 
+  ) {}
+  
   ngOnInit(): void {
-    this.articlesHome = [
-      {
-        title:"Vérifiez la structure du FEC",
-        icon:"bx bxs-bank",
-        label:"Se conformer aux normes légale en vue d'un eventuel control."
-      },
-      {
-        title:"Repérez les erreurs potentielles",
-        icon:"bx bxs-error-alt",
-        label:"Liste les erreurs liées à la structure du FEC et des écritures."
-      },
-      {
-        title:"Exportez le fichier de control",
-        icon:"bx bx-search-alt-2",
-        label:"Facilite le pointage des erreurs et la correction de celles-ci."
-      }
-    ]
+    this.showElements();
   }
-  
-  
+
+  showElements = () => {
+    if (isPlatformBrowser(this.platformId)) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+          } 
+        })
+      })
+      const hiddenElements = document.querySelectorAll('.hidden');
+      hiddenElements.forEach((el) => observer.observe(el));
+      const hidden2Elements = document.querySelectorAll('.hidden2');
+      hidden2Elements.forEach((el) => observer.observe(el));
+    }
+  } 
 }

@@ -37,7 +37,7 @@ export class ScriptControllContentService {
                 rowsError.push(rowNumber);
             }
         });
-        if (rowsError.length) messageError = `Vous avez des écritures sans numéro de pièces : ${rowsError.length} ligne(s).`;
+        if (rowsError.length) messageError = `Écritures sans numéro de pièces : ${rowsError.length} ligne(s).`;
         return messageError;
     }
 
@@ -156,8 +156,8 @@ export class ScriptControllContentService {
 
         const rowsErrorIsolatePiecesSorted = [...new Set(rowsErrorIsolatePieces)];
 
-        if (rowsErrorIsolatePieces.length) messageError = `Vous avez ${rowsErrorIsolatePiecesSorted.length} ligne(s) d'écriture(s) isolé(es).\n`
-        if (rowsErrorIsolateDates.length) messageError = messageError + `Vous avez une date d'écriture différente sur une même pièce : ${rowsErrorIsolateDates.length} ligne(s).`
+        if (rowsErrorIsolatePieces.length) messageError = `Ligne d'écriture isolée : ${rowsErrorIsolatePiecesSorted.length} ligne(s).\n`
+        if (rowsErrorIsolateDates.length) messageError = messageError + `Date d'écriture différente sur une même pièce : ${rowsErrorIsolateDates.length} ligne(s).`
         return messageError;
     }
 
@@ -185,7 +185,7 @@ export class ScriptControllContentService {
             }
         })
 
-        if (rowsError.length) messageError = `Les dates des colonnes EcritureDate et PieceDate ne correspondent pas : ${rowsError.length} ligne(s).`
+        if (rowsError.length) messageError = `Dates des colonnes EcritureDate et PieceDate différentes : ${rowsError.length} ligne(s).`
         return messageError;
     }
 
@@ -239,8 +239,7 @@ export class ScriptControllContentService {
         unbalancedPieces.unshift(['Ligne', 'JournalCode', 'EcritureNum', 'Debit', 'Credit', 'Ecarts']);
         ws2.addRows(unbalancedPieces);
         
-        if (rowsError.length) messageError = `Vous avez des pièces déséquilibrées : ${rowsError.length} ligne(s).`;
-        console.log('message error', messageError)
+        if (rowsError.length) messageError = `Pièces déséquilibrées : ${rowsError.length} ligne(s).`;
         return messageError;
     }
   

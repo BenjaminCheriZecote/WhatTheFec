@@ -1,15 +1,16 @@
 .header {
     color:var(--colorRedStrong);
-    position:sticky;
+    position:fixed;
     top:0;
 }
 
 .headerHome {
-    background-image: url('/pexels-moose-photos-1587014.webp');
+    background-image: url('/homePageHeader.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
     height: 100vh;
+    animation: fadeInBackground 1s ease-in-out forwards;
 }
 
 .headerSection {
@@ -18,11 +19,11 @@
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    padding:1rem;
+    padding: 0.7rem 1rem;
 }
 
 .headerSection nav {
-    margin-right: 2rem;
+    padding-right: 3rem;
 } 
 
 .headerNavLinkContainer {
@@ -56,14 +57,6 @@
     margin:0;
 }
 
-.headerTitle {
-    font-size:1rem;
-    font-family:'Poppins', sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    
-}
-
 .headerBis {
     background-color: #f1f2f4;
     box-shadow: 0px 4px 3px 0px rgb(125, 93, 93);
@@ -74,14 +67,38 @@
     transition: ease-in-out;
 }
 
+.headerTitleMobile {
+    display:none;
+    font-family:'Poppins', sans-serif;
+    font-weight: 500;
+   
+}
+
+@keyframes fadeInBackground {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+  }
+/* Media Query 600px */
 @media (max-width: 600px) {
-    /* -> dès que la taille d’écran au moins 576px, on change de couleur */
-    
     .headerHomeTitle  {
         font-size:5rem;
     }
-
     .headerTitle {
-        font-size:1rem;
+        font-size:1.2rem;
     }
+}
+/* Media Query 400px */
+@media (max-width: 400px) {
+
+    .headerTitleMobile {
+        display:block
+    }
+    .headerTitle, .headerHomeTitle {
+        display:none;
+    }
+    
 }

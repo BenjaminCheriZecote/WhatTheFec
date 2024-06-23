@@ -3,10 +3,11 @@
         <header>Sélectionner votre fichier.</header>
         <i class='bx bx-cloud-download bx-lg' ></i>
         <label for="inputFile">
-            <input #file id="inputFile" type="file" accept=".txt, .csv" hidden (change)="getFile(file)">
+            <input #file id="inputFile" type="file" accept=".txt, .csv" hidden [disabled]="isLoading$ | async" (change)="getFile(file)">
         </label>
         <button hidden id="btn">Envoyer</button>
     </form>
+    
     <ul *ngIf="this.fecs.length > 0" class="progress-area">
         <li *ngFor="let fec of this.fecs; let i = index">
             <app-tag-fec [fec]="fec" [indexFec]="i" class="row" (click)="selectedFec($event, i)"/>
@@ -15,6 +16,6 @@
     <p *ngIf="errorTypeFile.length > 0" class="errorTypeFile">{{errorTypeFile}}</p>
 </section>
 
-<section *ngIf="this.fec && this.fec.file" class="reportContainer ">
+<section *ngIf="this.fec && this.fec.file && this.fecs.length" class="reportContainer ">
     <app-data-report-fec [fec]="this.fec"/>
 </section>

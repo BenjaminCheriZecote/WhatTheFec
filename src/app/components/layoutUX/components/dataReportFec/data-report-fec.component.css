@@ -9,8 +9,19 @@
 .reportFeedback p {
     margin:0.5rem 0rem;
     white-space: pre-line;
+    text-align:justify;
 }
 
 .feedbackTitle {
     text-decoration: underline;
 }
+
+@media (max-width: 400px) {
+    .reportTitle {
+        font-size:1.3rem;
+    }
+    .reportFeedback {
+        font-size: 0.8rem;
+    }
+    
+  }

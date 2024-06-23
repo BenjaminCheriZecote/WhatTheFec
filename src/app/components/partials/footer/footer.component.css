@@ -1,6 +1,11 @@
 .footer {
     text-align: center;
+    align-items: center;
     padding:2rem;
     background-color: var(--colorBlueDark);
     color: var(--colorWhite);
+    margin-top:2rem;
+}
+.footer p {
+    margin-bottom:1rem;
 }

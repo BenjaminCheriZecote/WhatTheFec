@@ -1,19 +1,81 @@
 
 <section class="homeSection">
-    <header class="headerHome">
+    <header class="headerHome intro">
         <h2>Tester votre FEC</h2>
     </header>
     <div class="homeArticleContainer" >
-        <article class="homeArticle" *ngFor="let article of articlesHome"> 
-            <i class={{article.icon}}></i>
-            <h3> {{article.title}} </h3>
-            <p> {{article.label}} </p>
+        <article class="homeArticle hidden"> 
+            <i class="bx bxs-bank"></i>
+            <h3>Vérifiez la structure du FEC</h3>
+            <p>Se conformer aux normes légale en vue d'un eventuel control.</p>
+        </article>
+        <article class="homeArticle hidden"> 
+            <i class="bx bxs-error-alt"></i>
+            <h3>Repérez les erreurs potentielles</h3>
+            <p>Liste les erreurs liées à la structure du FEC et des écritures.</p>
+        </article>
+        <article class="homeArticle hidden"> 
+            <i class="bx bx-search-alt-2"></i>
+            <h3>Télécharger le fichier de control</h3>
+            <p>Facilite le pointage des erreurs et la correction de celles-ci.</p>
         </article>
     </div>
 </section>
 
-<section class="homeSection"> 
-    <header  class="headerHome">
-        <h2>Comment ça marche ?</h2>
-    </header>
+<section class="homeSection policy">
+    <div class="divColorPolicy">
+        <header class="headerHome hidden2">
+            <h2>Conformité légale</h2>
+        </header>
+    
+        <p class="hidden2">Le FEC est un document obligatoire pour toutes les entreprises soumises à une obligation comptable en France. Il est exigé par la Direction Générale des Finances Publiques (DGFIP) en cas de contrôle fiscal. La non-conformité du FEC peut entraîner des sanctions financières lourdes. C'est pourquoi il est crucial de s'assurer que votre FEC respecte scrupuleusement les normes établies.</p>
+    </div> 
+    <div>
+        <h3 class="hidden">Obligations légales relatives au FEC</h3>
+    
+        <ul>
+            <li class="hidden">
+                <span class="bold">Format et structure :</span> Le FEC doit être au format texte (ASCII ou UTF-8). Chaque ligne du fichier doit correspondre à une écriture comptable et inclure des champs spécifiques.
+            </li>
+            <li class="hidden">
+                <span class="bold">Contenu des champs :</span> Les champs doivent contenir des informations exactes et cohérentes. Par exemple, la date de l'opération doit être au format AAAA-MM-JJ, le numéro de compte doit respecter le plan comptable utilisé par l'entreprise, le libellé de l'écriture doit décrire clairement la nature de l'opération ect..
+            </li>
+            <li class="hidden">
+                <span class="bold">Séquence des écritures :</span> Les écritures doivent être présentées dans un ordre chronologique et logique. Chaque opération doit être correctement liée à ses pièces justificatives (factures, reçus, etc.).
+            </li>
+            <li class="hidden">
+                <span class="bold">Période couverte :</span> Le FEC doit couvrir l'intégralité de la période contrôlée, généralement une année fiscale complète.
+            </li>
+            <li class="hidden">
+                <span class="bold">Respect des normes comptables :</span> Toutes les écritures doivent être conformes aux normes comptables françaises, notamment en ce qui concerne la justification et l'enregistrement des opérations.
+            </li>
+        </ul>
+        <span>En savoir plus : <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000027804775/2024-06-19/" target="_blank">legifrance.gouv.fr</a></span>
+    </div>
+
+</section>
+
+<section class="homeSection test">
+    <div class="divColorTest">
+        <header class="headerHome hidden">
+            <h2>Le test</h2>
+        </header>
+
+        <p class="zMargin hidden">L'administration fiscale met à disposition depuis 2013 un outil de test <a href="https://www.economie.gouv.fr/dgfip/outil-test-des-fichiers-des-ecritures-comptables-fec" target="_blank">Test compta Demat</a> vérifiant <span class="bold">certains points</span> de conformité du fichier. On peut noter l'analyse de :</p>
+        <ul class="hidden">
+            <li>- la balance comptable</li>
+            <li>- la balance des comptes auxiliaires</li>
+            <li>- l'analyse des reports à nouveau</li>
+            <li>- la liste des écritures non équilibrées</li>
+            <li>- la liste des libellés d'écritures</li>
+            <li>- la liste des taux de TVA utilisés</li>
+            <li>- la liste des comptes auxiliaires</li>
+            <li>- la liste des dates d'écriture, dates de pièce, dates de lettrage, dates de validation</li>
+            <li>- la liste des journaux</li>
+            <li>- la liste des devises</li>
+            <li>- la liasse fiscale</li>
+        </ul>
+        <p class="hidden">Cet outil permet d'indiquer la nature de l'erreur et relève le nombre de lignes concernées. Cependant il n'indique pas où se trouve les erreurs dans le fichier.</p>
+    </div>
+    <footer class="hidden2">L'application <span class="headerTitle">What The FEC</span> complète ainsi ce test en approfondissant le pointage des erreurs par l'export du fichier FEC au format Excel. Par un jeu de couleur, en plus de vérifier le format de chaque donnnée, les points suivant sont controlés : les écritures non équilibrées, les écritures sans numéro de pièces, les lignes d'écritures isolées (sans contre-partie), les différences de dates au sein d'une même pièce, les différences de code journal au sein d'une même pièce. En sommes, la structure du fichier et des pièces comptables sont controlés.</footer>
 </section>

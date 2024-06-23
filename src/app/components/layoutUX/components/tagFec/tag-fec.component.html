@@ -10,7 +10,10 @@
     <progress #progressLoaded max="100" [value]="loaded?100:percentLoaded" class="progress progress-bar">{{percentLoaded}}%</progress>
 </div>
 <div class="contentOptions">
-    <button #btn class="btn" (click)="listenerButtonUploader(fec.file.name, fec.workbook)">Télécharger</button>
+    <button #btn class="btn" (click)="listenerButtonUploader(fec.file.name, fec.workbook)">
+        <span>Télécharger</span>
+        <uploadIcon class="uploadIcon"/>
+    </button>
     <deleteIcon width="1rem" (click)="removeFec()" class="deleteIcon"/>
 </div>
 

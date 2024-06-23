@@ -12,10 +12,12 @@ import { ScriptControllFileService } from '../scriptControllFile/script-controll
 export class FecService {
   private fecs = new BehaviorSubject<Fec[]>([]);
   private fec = new BehaviorSubject<Fec|null>(null);
+  private isLoading = new BehaviorSubject<boolean>(false);
   private percentLoaded = new BehaviorSubject<number>(0);
 
   fecs$ = this.fecs.asObservable();
   fec$ = this.fec.asObservable();
+  isLoading$ = this.isLoading.asObservable();
   percentLoaded$ = this.percentLoaded.asObservable();
   reader:FileReader;
   errorTypeFile:string;
@@ -43,17 +45,22 @@ export class FecService {
   getFecs() : any {
     return this.fecs.getValue();
   }
-  setSelectedFec = (event:Event) => {
-    const tagFecElement = event.target instanceof HTMLElement && event.target.closest('.row');
+  setSelectedFec = (event:Event|undefined) => {
+    const fecs = document.querySelectorAll('.row');
+    let tagFecElement;
+    if (event) {
+      tagFecElement = event.target instanceof HTMLElement && event.target.closest('.row');
+    } else {
+      tagFecElement = fecs[fecs.length- 1];
+    }
+    
     if (tagFecElement && tagFecElement.classList.contains('selected')) return
+
     if (isPlatformBrowser(this.platformId)) {
-      const fecs = document.querySelectorAll('.row');
       fecs.forEach((fec) => {
         fec.classList.remove('selected');
       });
-      if (event.target instanceof HTMLElement) event.target.classList.add('selected')
       if (tagFecElement) tagFecElement.classList.add('selected')
-      
     }
   }
 
@@ -61,9 +68,13 @@ export class FecService {
     this.percentLoaded.next(0);
   }
 
+  turnOffLoading = () => {
+    this.isLoading.next(false);
+  }
+
   getFile = async (inputFileElement:any) => {
     if (isPlatformBrowser(this.platformId)) {
-  
+      this.isLoading.next(true);
       const selectedFile:File = inputFileElement.files[0];
   
       if (selectedFile.type !== 'text/plain') return this.errorTypeFile = 'Veuillez sélectionner un fichier de type text';
@@ -88,9 +99,9 @@ export class FecService {
       
       this.reader.addEventListener('load', async () => {
         this.percentLoaded.next(1);
-        await new Promise((resolve, reject) => {
+        await new Promise((resolve) => {
           setTimeout(() => {
-            resolve(console.log("test"))
+            resolve(console.log("Starting control"))
           }, 200)
         })
         const start = performance.now();
@@ -101,7 +112,9 @@ export class FecService {
         const ws:ExcelJS.Worksheet = wb.addWorksheet('Fichier Control');
         // ajout d'une seconde feuille de calcul
         const ws2:ExcelJS.Worksheet = wb.addWorksheet('Debit Credit');
-        this.percentLoaded.next(15);
+
+        this.percentLoaded.next(15); // SET LOADING 15%
+
         if (typeof textContent === 'string') {
           // chaque ligne du fichier est stockée dans un tableau 'lines', grâce au retour à la ligne fu fichier
           const lines = textContent && textContent.split('\n');
@@ -114,8 +127,8 @@ export class FecService {
           // protoBody est d'abord trié
           this.scriptControllContent.sortData(protoBody);
   
-          this.percentLoaded.next(30);
-
+          this.percentLoaded.next(30); // SET LOADING 30%
+          
           // puis les données des colonnes débit et crédit sont convertis en nombre. Le résultat est stocké dans body
           const body = protoBody.map( line => {
               const modifiedLine = [...line];
@@ -123,10 +136,18 @@ export class FecService {
               modifiedLine[12] = this.parseNumber(modifiedLine[12]);
               return modifiedLine;
           });
-          this.percentLoaded.next(50);
+
+          this.percentLoaded.next(50); // SET LOADING 50%
          
           // Ajout des données dans la première feuille de calcul feuille de calcul
           ws.addRows(body);
+
+          const [searchEmptyNumPiece, searchAlonePieceIsolateDate, checkDatesColumns, checkBalancePiece] = await Promise.all([
+            this.scriptControllContent.searchEmptyNumPiece(ws),
+            this.scriptControllContent.searchAlonePieceIsolateDate(ws),
+            this.scriptControllContent.checkDatesColumns(ws),
+            this.scriptControllContent.checkBalancePiece(header, body, ws2)
+          ]);
 
           const newFec: Fec = {
             file: selectedFile,
@@ -134,17 +155,17 @@ export class FecService {
               headerColumns: this.scriptControllFile.headerColumns(header)
             },
             reportControllContent: {
-              searchEmptyNumPiece: this.scriptControllContent.searchEmptyNumPiece(ws),
-              searchAlonePieceIsolateDate: this.scriptControllContent.searchAlonePieceIsolateDate(ws),
-              checkDatesColumns: this.scriptControllContent.checkDatesColumns(ws),
-              checkBalancePiece: this.scriptControllContent.checkBalancePiece(header, body, ws2)
+              searchEmptyNumPiece: searchEmptyNumPiece,
+              searchAlonePieceIsolateDate: searchAlonePieceIsolateDate,
+              checkDatesColumns: checkDatesColumns,
+              checkBalancePiece: checkBalancePiece
             },
             workbook:wb
           };
 
           this.updateFec(newFec);
           this.fec.next(newFec);
-          this.percentLoaded.next(100);
+          this.percentLoaded.next(100); // SET LOADING 100%
         }
         const end = performance.now();
         console.log(`Execution time: ${end - start} milliseconds`);
@@ -153,10 +174,8 @@ export class FecService {
       });
       // lecture du fichier, permettant ainsi l'observation des données.
       this.reader.readAsText(selectedFile);
-      
-    
     }
-    return 
+    return
   }
 
   parseNumber = (value: string | number): number => {

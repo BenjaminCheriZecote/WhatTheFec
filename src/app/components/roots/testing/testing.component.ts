@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
-import { NgIf, NgFor, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, ViewChild, ElementRef, Inject, PLATFORM_ID} from '@angular/core';
+import { NgIf, NgFor, isPlatformBrowser, AsyncPipe } from '@angular/common';
 import { ScriptControllContentService } from '../../helpers/services/scriptControllContent/script-controll-content.service';
 import { ScriptControllFileService } from '../../helpers/services/scriptControllFile/script-controll-file.service';
 import { TagFecComponent } from '../../layoutUX/components/tagFec/tag-fec.component';
@@ -10,7 +10,7 @@ import { FecService } from '../../helpers/services/fecService/fecs.service';
 @Component({
   selector: 'app-testing',
   standalone: true,
-  imports: [NgIf, TagFecComponent, NgFor, DataFecFileComponent],
+  imports: [NgIf, TagFecComponent, NgFor, DataFecFileComponent, AsyncPipe],
   templateUrl: './testing.component.html',
   styleUrl: './testing.component.css',
   providers: [ScriptControllContentService, ScriptControllFileService]
@@ -21,6 +21,7 @@ export class TestingComponent implements OnInit{
   reader:FileReader;
   fecs:(Fec | File)[];
   fec:Fec|null;
+  isLoading$ = this.fecService.isLoading$;
   
 
   @ViewChild('file') inputFileElement!: ElementRef;
@@ -28,7 +29,7 @@ export class TestingComponent implements OnInit{
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object, 
-    private fecService:FecService, 
+    private fecService:FecService,
   ) {}
 
   ngOnInit(): void {
@@ -40,14 +41,13 @@ export class TestingComponent implements OnInit{
     this.fecService.fec$.subscribe(fec => {
       this.fec = fec;
     })
-    
   }
 
   findFile = () => {
     this.inputFileElement.nativeElement.click();
   }
 
-  getFile = (input:any) => {
+  getFile = async (input:any) => {
     this.fecService.getFile(input);
     this.fecService.resetPercentLoaded();
     this.inputFileElement.nativeElement.value = '';
