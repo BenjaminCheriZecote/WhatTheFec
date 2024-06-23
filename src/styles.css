@@ -1,9 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,600;1,700;1,800&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&display=swap');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -28,7 +25,7 @@ time, mark, audio, video {
 a {
 	color:inherit;
 }
-/* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -49,7 +46,7 @@ table {
 	border-spacing: 0;
 }
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -80,13 +77,10 @@ body::-webkit-scrollbar {
 	justify-content: space-between;
 	position:relative;
 }
-/* section {
-	padding: 0rem 2.7rem;
-} */
 
 /* SHARED STYLE COMPONENT */
 .headerTitle {
-    font-family: 'Caveat', cursive;
+    font-family: 'Caveat', 'Helvetica', cursive;
     color:var(--colorRedStrong);
     font-size:1.6rem;
     font-weight: 700;
