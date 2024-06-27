@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as ExcelJS from 'exceljs';
 import { ScriptControllContentService } from '../scriptControllContent/script-controll-content.service';
 import { ScriptControllFileService } from '../scriptControllFile/script-controll-file.service';
+import validator from '../../validator/validator';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,15 @@ export class FecService {
   private fec = new BehaviorSubject<Fec|null>(null);
   private isLoading = new BehaviorSubject<boolean>(false);
   private percentLoaded = new BehaviorSubject<number>(0);
+  private errorTypeFile = new BehaviorSubject<string>('');
 
   fecs$ = this.fecs.asObservable();
   fec$ = this.fec.asObservable();
   isLoading$ = this.isLoading.asObservable();
   percentLoaded$ = this.percentLoaded.asObservable();
+  errorTypeFile$ = this.errorTypeFile.asObservable();
   reader:FileReader;
-  errorTypeFile:string;
+  
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -76,9 +79,12 @@ export class FecService {
     if (isPlatformBrowser(this.platformId)) {
       this.isLoading.next(true);
       const selectedFile:File = inputFileElement.files[0];
-  
-      if (selectedFile.type !== 'text/plain') return this.errorTypeFile = 'Veuillez sélectionner un fichier de type text';
-      
+      console.log("selectedFile", selectedFile);
+    
+      validator.typeFile(selectedFile, this.errorTypeFile, this.isLoading);
+      validator.emptyFile(selectedFile, this.errorTypeFile, this.isLoading);
+      validator.sizeFile(selectedFile, this.errorTypeFile, this.isLoading);
+
       const protoFec = {
         file:selectedFile,
         reportControllFile: {
@@ -94,7 +100,7 @@ export class FecService {
       };
       this.addFec(protoFec);
 
-      this.errorTypeFile = '';
+      this.errorTypeFile.next('');
       this.reader = new FileReader();
       
       this.reader.addEventListener('load', async () => {
@@ -113,17 +119,20 @@ export class FecService {
         // ajout d'une seconde feuille de calcul
         const ws2:ExcelJS.Worksheet = wb.addWorksheet('Debit Credit');
 
-        this.percentLoaded.next(15); // SET LOADING 15%
-
-        if (typeof textContent === 'string') {
-          // chaque ligne du fichier est stockée dans un tableau 'lines', grâce au retour à la ligne fu fichier
-          const lines = textContent && textContent.split('\n');
+        
+        if (textContent && typeof textContent === 'string') {
+          this.percentLoaded.next(15); // SET LOADING 15%
+          // chaque ligne du fichier est stockée dans un tableau 'lines', grâce au retour à la ligne du fichier
+          const lines = textContent.split('\n');
           // chaque élément de 'lines' est parcellisé pour obtenir les données de chaque colonnes grâce à la tabulatipn du fichier
           const data = Array.isArray(lines) ? lines.map(line => line.split('\t')) : [] as string[][];
           // le premier élément du tableau 'data', constitue la première ligne du fichier, soit les en-têtes des colonnes 
           const header:string[] = data[0];
           // le cors du fichier, sans les en-têtes, est récupéré dans protoBody
           const protoBody: (string | number)[][] = data.slice(1);
+
+          validator.lengthBody(protoBody, this.errorTypeFile, this.isLoading, this.fecs );
+
           // protoBody est d'abord trié
           this.scriptControllContent.sortData(protoBody);
   
@@ -141,6 +150,8 @@ export class FecService {
          
           // Ajout des données dans la première feuille de calcul feuille de calcul
           ws.addRows(body);
+
+          this.percentLoaded.next(55); // SET LOADING 55%
 
           const [searchEmptyNumPiece, searchAlonePieceIsolateDate, checkDatesColumns, checkBalancePiece] = await Promise.all([
             this.scriptControllContent.searchEmptyNumPiece(ws),
@@ -162,15 +173,17 @@ export class FecService {
             },
             workbook:wb
           };
+          this.percentLoaded.next(90); // SET LOADING 90%
 
           this.updateFec(newFec);
           this.fec.next(newFec);
           this.percentLoaded.next(100); // SET LOADING 100%
+          return
         }
         const end = performance.now();
         console.log(`Execution time: ${end - start} milliseconds`);
   
-        
+        return
       });
       // lecture du fichier, permettant ainsi l'observation des données.
       this.reader.readAsText(selectedFile);
@@ -186,4 +199,7 @@ export class FecService {
     }
     return value;
   };
+  setError = (error:string) => {
+    this.errorTypeFile.next(`${error}`)
+  }
 }

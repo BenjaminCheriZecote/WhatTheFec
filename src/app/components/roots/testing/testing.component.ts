@@ -16,8 +16,7 @@ import { FecService } from '../../helpers/services/fecService/fecs.service';
   providers: [ScriptControllContentService, ScriptControllFileService]
 })
 export class TestingComponent implements OnInit{
-
-  errorTypeFile:string;
+  errorTypeFile:string='';
   reader:FileReader;
   fecs:(Fec | File)[];
   fec:Fec|null;
@@ -33,7 +32,6 @@ export class TestingComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.errorTypeFile = '';
     if (isPlatformBrowser(this.platformId)) this.reader = new FileReader();
     this.fecService.fecs$.subscribe(fecs => {
       this.fecs = fecs;
@@ -41,7 +39,11 @@ export class TestingComponent implements OnInit{
     this.fecService.fec$.subscribe(fec => {
       this.fec = fec;
     })
+    this.fecService.errorTypeFile$.subscribe(errorTypeFile => {
+      this.errorTypeFile = errorTypeFile;
+    })
   }
+  
 
   findFile = () => {
     this.inputFileElement.nativeElement.click();

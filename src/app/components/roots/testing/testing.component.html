@@ -1,9 +1,9 @@
 <section class="fileSection">
     <form #form method="post" action="/test" id="formFile" (click)="findFile()">
-        <header>Sélectionner votre fichier.</header>
+        <header>Sélectionner votre fichier</header>
         <i class='bx bx-cloud-download bx-lg' ></i>
         <label for="inputFile">
-            <input #file id="inputFile" type="file" accept=".txt, .csv" hidden [disabled]="isLoading$ | async" (change)="getFile(file)">
+            <input #file id="inputFile" type="file" accept=".txt" hidden [disabled]="isLoading$ | async" (change)="getFile(file)">
         </label>
         <button hidden id="btn">Envoyer</button>
     </form>
@@ -13,7 +13,7 @@
             <app-tag-fec [fec]="fec" [indexFec]="i" class="row" (click)="selectedFec($event, i)"/>
         </li>
     </ul>
-    <p *ngIf="errorTypeFile.length > 0" class="errorTypeFile">{{errorTypeFile}}</p>
+    <p *ngIf=" this.errorTypeFile.length" class="errorTypeFile">{{this.errorTypeFile}}</p>
 </section>
 
 <section *ngIf="this.fec && this.fec.file && this.fecs.length" class="reportContainer ">
