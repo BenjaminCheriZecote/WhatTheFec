@@ -1,21 +1,17 @@
-.reportTitle {
-    font-size: 1.5rem;
-}
-
-.reportTitle, .reportFeedback {
+.reportFeedback {
     padding:1rem;
 }
-
 .reportFeedback p {
     margin:0.5rem 0rem;
     white-space: pre-line;
     text-align:justify;
+    max-width:40rem;
 }
 
 .feedbackTitle {
     text-decoration: underline;
 }
-
+/* Media Query 400px */
 @media (max-width: 400px) {
     .reportTitle {
         font-size:1.3rem;

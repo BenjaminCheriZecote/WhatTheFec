@@ -62,6 +62,7 @@
   background-color: rgb(223, 226, 233);
   border-radius:0.3rem;
   padding:0.5rem;
+  transition: .2s ease-in-out;
 }
 
 .errorTypeFile {
@@ -75,7 +76,19 @@
 #header_section-h1 {
   font-size:1rem;
 }
-
+.reportTitle {
+  font-size: 1.5rem;
+}
+.reportTitle, .reportFeedback {
+  padding:1rem;
+}
+.reportContent {
+  display:flex;
+  flex-flow: row wrap;
+}
+.glossary {
+  margin:auto;
+}
 .hidden {
   display: none;
 }
@@ -92,7 +105,7 @@
   }
 }
 
-/* Media Query 400px */
+/* Media Query 600px */
 @media (max-width: 600px) {
   .fileSection {
     width:90%;

@@ -6,11 +6,12 @@ import { TagFecComponent } from '../../layoutUX/components/tagFec/tag-fec.compon
 import { DataFecFileComponent } from '../../layoutUX/components/dataReportFec/data-report-fec.component';
 import { Fec } from '../../helpers/types/Fec';
 import { FecService } from '../../helpers/services/fecService/fecs.service';
+import { GlossaryReportFecComponent } from '../../layoutUX/components/glossaryReportFec/glossary-report-fec.component';
 
 @Component({
   selector: 'app-testing',
   standalone: true,
-  imports: [NgIf, TagFecComponent, NgFor, DataFecFileComponent, AsyncPipe],
+  imports: [NgIf, TagFecComponent, NgFor, DataFecFileComponent, GlossaryReportFecComponent, AsyncPipe ],
   templateUrl: './testing.component.html',
   styleUrl: './testing.component.css',
   providers: [ScriptControllContentService, ScriptControllFileService]
@@ -50,7 +51,7 @@ export class TestingComponent implements OnInit{
   }
 
   getFile = async (input:any) => {
-    this.fecService.getFile(input);
+    this.fecService.takeFile(input);
     this.fecService.resetPercentLoaded();
     this.inputFileElement.nativeElement.value = '';
   }

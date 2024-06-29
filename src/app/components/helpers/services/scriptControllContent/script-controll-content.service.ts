@@ -156,42 +156,57 @@ export class ScriptControllContentService {
 
         const rowsErrorIsolatePiecesSorted = [...new Set(rowsErrorIsolatePieces)];
 
-        if (rowsErrorIsolatePieces.length) messageError = `Ligne d'écriture isolée : ${rowsErrorIsolatePiecesSorted.length} ligne(s).\n`
-        if (rowsErrorIsolateDates.length) messageError = messageError + `Date d'écriture différente sur une même pièce : ${rowsErrorIsolateDates.length} ligne(s).`
+        if (rowsErrorIsolatePieces.length) messageError = `Ligne d'écriture isolée : ${rowsErrorIsolatePiecesSorted.length} ligne(s).`;
+        if (rowsErrorIsolateDates.length) messageError = messageError.length?`${messageError}\nDate d'écriture différente sur une même pièce : ${rowsErrorIsolateDates.length} ligne(s).`:`Date d'écriture différente sur une même pièce : ${rowsErrorIsolateDates.length} ligne(s).`;
         return messageError;
     }
 
     checkDatesColumns = (ws:any) => {
         let messageError:string = '';
-        const rowsError:string[] = []
+        const regex = /^20[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
+        const rowsErrorDifferentDatesColumns:string[] = [];
+        const rowsErrorFormatDate:string[] = [];
         ws.eachRow((row:any, rowNumber:any) => {
-            if (row.values[4] !== row.values[10]) {
+            if (row.values[4] !== row.values[10] || !regex.test(row.values[4]) || !regex.test(row.values[10])) {
                 row.fill = {
                     type: 'pattern',
                     pattern: 'solid',
                     fgColor: { argb: 'FFF1F2F4' }
                 };
-
-                row._cells[3].font = {
-                    color: { argb: 'FF0808CD' },
-                    bold: true
+                if (row.values[4] !== row.values[10]) {
+                    row._cells[3].font = {
+                        color: { argb: 'FF0808CD' },
+                        bold: true
+                    }
+    
+                    row._cells[9].font = {
+                        color: { argb: 'FF0808CD' },
+                        bold: true
+                    }
+                    rowsErrorDifferentDatesColumns.push(rowNumber)
                 }
-
-                row._cells[9].font = {
-                    color: { argb: 'FF0808CD' },
-                    bold: true
+                if (!regex.test(row.values[4]) || !regex.test(row.values[10])) {
+                    if (!regex.test(row.values[4])) {
+                        row._cells[3].font = {
+                            color: { argb: 'FF0808CD' },
+                            bold: true
+                        } 
+                    }
+                    if (!regex.test(row.values[10])) {
+                        row._cells[9].font = {
+                            color: { argb: 'FF0808CD' },
+                            bold: true
+                        }
+                    rowsErrorFormatDate.push(rowNumber);
                 }
-                rowsError.push(rowNumber)
+                }
             }
         })
 
-        if (rowsError.length) messageError = `Dates des colonnes EcritureDate et PieceDate différentes : ${rowsError.length} ligne(s).`
+        if (rowsErrorDifferentDatesColumns.length) messageError = `Dates des colonnes EcritureDate et PieceDate différentes : ${rowsErrorDifferentDatesColumns.length} ligne(s).`;
+        if (rowsErrorFormatDate.length) messageError = messageError.length?`${messageError}\nFormat de date incorrecte : ${rowsErrorFormatDate.length} ligne(s).`:`Format de date incorrecte : ${rowsErrorFormatDate.length} ligne(s).`
         return messageError;
     }
-
-    // checkSelfDatesPiece: () => {
-
-    // },
 
     checkBalancePiece = (header:any, body:any, ws2:any) => {
         let messageError = '';

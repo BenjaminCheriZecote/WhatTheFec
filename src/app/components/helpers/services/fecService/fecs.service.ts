@@ -75,7 +75,7 @@ export class FecService {
     this.isLoading.next(false);
   }
 
-  getFile = async (inputFileElement:any) => {
+  takeFile = async (inputFileElement:any) => {
     if (isPlatformBrowser(this.platformId)) {
       this.isLoading.next(true);
       const selectedFile:File = inputFileElement.files[0];
@@ -102,95 +102,99 @@ export class FecService {
 
       this.errorTypeFile.next('');
       this.reader = new FileReader();
-      
-      this.reader.addEventListener('load', async () => {
-        this.percentLoaded.next(1);
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(console.log("Starting control"))
-          }, 200)
-        })
-        const start = performance.now();
-        const textContent = this.reader.result;
-        // création d'un nouveau fichier excel / workbook
-        const wb:ExcelJS.Workbook = new ExcelJS.Workbook();
-        // ajout d'une feuille de calcul dans le workbook
-        const ws:ExcelJS.Worksheet = wb.addWorksheet('Fichier Control');
-        // ajout d'une seconde feuille de calcul
-        const ws2:ExcelJS.Worksheet = wb.addWorksheet('Debit Credit');
-
-        
-        if (textContent && typeof textContent === 'string') {
-          this.percentLoaded.next(15); // SET LOADING 15%
-          // chaque ligne du fichier est stockée dans un tableau 'lines', grâce au retour à la ligne du fichier
-          const lines = textContent.split('\n');
-          // chaque élément de 'lines' est parcellisé pour obtenir les données de chaque colonnes grâce à la tabulatipn du fichier
-          const data = Array.isArray(lines) ? lines.map(line => line.split('\t')) : [] as string[][];
-          // le premier élément du tableau 'data', constitue la première ligne du fichier, soit les en-têtes des colonnes 
-          const header:string[] = data[0];
-          // le cors du fichier, sans les en-têtes, est récupéré dans protoBody
-          const protoBody: (string | number)[][] = data.slice(1);
-
-          validator.lengthBody(protoBody, this.errorTypeFile, this.isLoading, this.fecs );
-
-          // protoBody est d'abord trié
-          this.scriptControllContent.sortData(protoBody);
-  
-          this.percentLoaded.next(30); // SET LOADING 30%
-          
-          // puis les données des colonnes débit et crédit sont convertis en nombre. Le résultat est stocké dans body
-          const body = protoBody.map( line => {
-              const modifiedLine = [...line];
-              modifiedLine[11] = this.parseNumber(modifiedLine[11]);
-              modifiedLine[12] = this.parseNumber(modifiedLine[12]);
-              return modifiedLine;
-          });
-
-          this.percentLoaded.next(50); // SET LOADING 50%
-         
-          // Ajout des données dans la première feuille de calcul feuille de calcul
-          ws.addRows(body);
-
-          this.percentLoaded.next(55); // SET LOADING 55%
-
-          const [searchEmptyNumPiece, searchAlonePieceIsolateDate, checkDatesColumns, checkBalancePiece] = await Promise.all([
-            this.scriptControllContent.searchEmptyNumPiece(ws),
-            this.scriptControllContent.searchAlonePieceIsolateDate(ws),
-            this.scriptControllContent.checkDatesColumns(ws),
-            this.scriptControllContent.checkBalancePiece(header, body, ws2)
-          ]);
-
-          const newFec: Fec = {
-            file: selectedFile,
-            reportControllFile: {
-              headerColumns: this.scriptControllFile.headerColumns(header)
-            },
-            reportControllContent: {
-              searchEmptyNumPiece: searchEmptyNumPiece,
-              searchAlonePieceIsolateDate: searchAlonePieceIsolateDate,
-              checkDatesColumns: checkDatesColumns,
-              checkBalancePiece: checkBalancePiece
-            },
-            workbook:wb
-          };
-          this.percentLoaded.next(90); // SET LOADING 90%
-
-          this.updateFec(newFec);
-          this.fec.next(newFec);
-          this.percentLoaded.next(100); // SET LOADING 100%
-          return
-        }
-        const end = performance.now();
-        console.log(`Execution time: ${end - start} milliseconds`);
-  
-        return
+      this.reader.addEventListener('load', async (event: ProgressEvent<FileReader>) => {
+        await this.analyzeFile(selectedFile);
       });
-      // lecture du fichier, permettant ainsi l'observation des données.
       this.reader.readAsText(selectedFile);
     }
     return
   }
+  analyzeFile = async (selectedFile:File) => {
+    this.percentLoaded.next(1);
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(console.log("Starting control"))
+      }, 200)
+    })
+    const start = performance.now();
+    const textContent = this.reader.result;
+    
+    if (textContent && typeof textContent === 'string') {
+      // chaque ligne du fichier est stockée dans un tableau 'lines', grâce au retour à la ligne du fichier
+      const lines = textContent.split('\n');
+      // chaque élément de 'lines' est parcellisé pour obtenir les données de chaque colonnes grâce à la tabulatipn du fichier
+      const data = Array.isArray(lines) ? lines.map(line => line.split('\t')) : [] as string[][];
+      // le premier élément du tableau 'data', constitue la première ligne du fichier, soit les en-têtes des colonnes 
+      const header:string[] = data[0];
+      // le cors du fichier, sans les en-têtes, est récupéré dans protoBody
+      const protoBody: (string | number)[][] = data.slice(1);
 
+      this.percentLoaded.next(15); // SET LOADING 15%
+
+      validator.lengthBody(protoBody, this.errorTypeFile, this.isLoading, this.fecs );
+      
+      await this.createFileExcelControl(selectedFile, protoBody, header);
+      this.percentLoaded.next(100); // SET LOADING 100%
+      return
+    }
+    const end = performance.now();
+    console.log(`Execution time: ${end - start} milliseconds`);
+
+    return
+  }
+  createFileExcelControl = async (selectedFile:File, protoBody:(string | number)[][], header:string[]) => {
+    // création d'un nouveau fichier excel / workbook
+    const wb:ExcelJS.Workbook = new ExcelJS.Workbook();
+    // ajout d'une feuille de calcul dans le workbook
+    const ws:ExcelJS.Worksheet = wb.addWorksheet('Fichier Control');
+    // ajout d'une seconde feuille de calcul
+    const ws2:ExcelJS.Worksheet = wb.addWorksheet('Debit Credit');
+    // protoBody est d'abord trié
+    this.scriptControllContent.sortData(protoBody);
+
+    this.percentLoaded.next(30); // SET LOADING 30%
+    
+    // puis les données des colonnes débit et crédit sont convertis en nombre. Le résultat est stocké dans body
+    const body = protoBody.map( line => {
+        const modifiedLine = [...line];
+        modifiedLine[11] = this.parseNumber(modifiedLine[11]);
+        modifiedLine[12] = this.parseNumber(modifiedLine[12]);
+        return modifiedLine;
+    });
+
+    this.percentLoaded.next(45); // SET LOADING 45%
+    
+    // Ajout des données dans la première feuille de calcul feuille de calcul
+    ws.addRows(body);
+
+    this.percentLoaded.next(55); // SET LOADING 55%
+
+    const [searchEmptyNumPiece, searchAlonePieceIsolateDate, checkDatesColumns, checkBalancePiece] = await Promise.all([
+      this.scriptControllContent.searchEmptyNumPiece(ws),
+      this.scriptControllContent.searchAlonePieceIsolateDate(ws),
+      this.scriptControllContent.checkDatesColumns(ws),
+      this.scriptControllContent.checkBalancePiece(header, body, ws2)
+    ]);
+    this.percentLoaded.next(90); // SET LOADING 90%
+    const newFec: Fec = {
+      file: selectedFile,
+      reportControllFile: {
+        headerColumns: this.scriptControllFile.headerColumns(header)
+      },
+      reportControllContent: {
+        searchEmptyNumPiece: searchEmptyNumPiece,
+        searchAlonePieceIsolateDate: searchAlonePieceIsolateDate,
+        checkDatesColumns: checkDatesColumns,
+        checkBalancePiece: checkBalancePiece
+      },
+      workbook:wb
+    };
+    this.percentLoaded.next(95); // SET LOADING 95%
+
+    this.updateFec(newFec);
+    this.fec.next(newFec);
+    this.percentLoaded.next(99); // SET LOADING 99%
+  }
   parseNumber = (value: string | number): number => {
     if (typeof value === 'string') {
       // toFixed(2) retourne une string où les décimales sont arrodins à 2 chiffres après la virgule

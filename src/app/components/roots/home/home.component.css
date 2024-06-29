@@ -155,14 +155,14 @@ section .zMargin {
         transition:none;
     }
 }
+/* Media Query 781px */
 @media (max-width: 781px) {
-    /* -> dès que la taille d’écran au moins 576px, on change de couleur */
     .homeArticleContainer {
         flex-flow: row wrap;
     }
 }
+/* Media Query 630px */
 @media (max-width: 630px) {
-    /* -> dès que la taille d’écran au moins 576px, on change de couleur */
     .homeArticleContainer {
         flex-flow: column;
         align-items: center;
@@ -177,7 +177,7 @@ section .zMargin {
         font-size: 0.8rem;
     }
 }
-
+/* Media Query 630px */
 @media (min-width: 630px) {
     .policy p, .policy li, .policy > div > span, .test p, .test li, .test footer {
         display:block;
@@ -187,8 +187,6 @@ section .zMargin {
     }
     .policy h2, .policy h3, .test h2 {
         max-width:40rem;
-    } 
-        
-
+    }     
 }
 

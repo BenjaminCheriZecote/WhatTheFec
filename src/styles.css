@@ -68,7 +68,7 @@ body::-webkit-scrollbar {
     --colorBoxShadow:rgb(205, 205, 205);
 	--colorWhite:rgb(255, 255, 255);
 	--colorBackground: rgba(241, 242, 244, 0.8);
-	--colorBackground2: rgb(195,174,165);
+	--colorBlueFontErrorDate:#0808cd;
 }
 #appRoot {
 	height: 100%;

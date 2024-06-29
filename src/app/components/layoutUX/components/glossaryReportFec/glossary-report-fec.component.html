@@ -1,0 +1,19 @@
+<aside class="glossaryContainer">
+    <ul>
+        <li *ngFor="let legend of glossary">
+            <figure>
+                <squareGlossaryIcon *ngIf="legend.type === 'square'" 
+                    [ariaLabel]="legend.ariaLabel" 
+                    [width]="legend.width" 
+                    [color]="legend.color"
+                />
+                <fontGlossaryIcon *ngIf="legend.type === 'font'" 
+                    [ariaLabel]="legend.ariaLabel" 
+                    [width]="legend.width" 
+                    [color]="legend.color"
+                />
+                <figcaption>{{legend.figCaption}}</figcaption>
+            </figure>
+        </li>
+    </ul>
+</aside>

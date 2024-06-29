@@ -17,5 +17,11 @@
 </section>
 
 <section *ngIf="this.fec && this.fec.file && this.fecs.length" class="reportContainer ">
-    <app-data-report-fec [fec]="this.fec"/>
+    <div>
+        <h2 class="reportTitle">Compte rendu {{this.fec.file.name}}</h2>
+    </div>
+    <div class="reportContent">
+        <app-data-report-fec [fec]="this.fec"/>
+        <app-glossary-report-fec class="glossary"/>
+    </div>
 </section>

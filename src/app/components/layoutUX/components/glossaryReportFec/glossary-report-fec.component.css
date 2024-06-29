@@ -1,0 +1,47 @@
+.glossaryContainer {
+    border-radius:0.3rem;
+    background-color: var(--colorBackground);
+    padding:1.5rem;
+    margin-top:1rem;
+    transition:.4s ease-in-out;
+    width:fit-content;
+    border:1px var(--colorIconHome) solid;
+}
+.glossaryContainer:hover {
+    scale: 1.01;
+    box-shadow:5px 5px 15px 5px rgb(205, 205, 205);
+}
+.glossaryContainer figcaption {
+    max-width: 15rem;
+    font-size:0.7rem;
+}
+.glossaryContainer figure {
+    display:flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width:fit-content;
+}
+/* Media Query 1200px */
+@media (min-width: 1200px) {
+    .glossaryContainer {
+        padding:2rem;
+    }
+    .glossaryContainer figcaption {
+        max-width: 30rem;
+        font-size:0.9rem;
+    }
+  }
+/* Media Query 330px */
+  @media (max-width: 330px) {
+    .glossaryContainer {
+        padding:0.9rem;
+    }
+    .glossaryContainer figcaption {
+        font-size:0.6rem;
+    }
+    .glossaryContainer figure {
+        margin-bottom:0.2rem;
+    }
+  }
+
+
