@@ -4,7 +4,7 @@
 
 <div class="content">
     <div class="details">
-        <span class="name">{{fec.file.name}}</span>
+        <span class="name">{{fec.file.name.length <= 24?fec.file.name : fec.file.name.slice(0,24) + "(...)" }}</span>
         <span class="percent">{{loaded?100:percentLoaded}}%</span>
     </div>
     <progress #progressLoaded max="100" [value]="loaded?100:percentLoaded" class="progress progress-bar">{{percentLoaded}}%</progress>

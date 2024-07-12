@@ -1,0 +1,11 @@
+JournalCode	JournalLib	EcritureNum	EcritureDate	CompteNum	CompteLib	CompAuxNum	CompAuxLib	PieceRef	PieceDate	EcritureLib	Montant	Sens	EcritureLetr	DateLet	ValidDate	Montantdevise	Idevise
+ac	Achats	1	20210127	401000	Fournisseurs divers	401SNC	Sncf	9612181851	20210127	Sncf 	38	1	Q	20210213	20220401		
+ac	Achats	1	20210127	625100	Voyages et deplacements			9612181851	20210127	Sncf 	39	-1			20220401		
+ac	Achats	2	20210128	401000	Fournisseurs divers	401DIV	Fournisseurs divers	9612181837	20210128	GALERIE LAFAYETTE	6,3	-1	BG	20211228	20220401		
+ac	Achats	2	20210128	625600	Missions			9612181837	20210128	GALERIE LAFAYETTE	5,73	1			20220401		
+ac	Achats	2	20210128	445660	Tva déductible sur autres biens et services			9612181837	20210128	GALERIE LAFAYETTE	0,57	1			20220401		
+ac	Achats	3	20210131	401000	Fournisseurs divers	401IND	Indeed	9659468427	20210131	Indeed Ireland Operations 39458199	261,48	-1	B	20211001	20220401		
+ac	Achats	3	20210131	623100	Annonces et insertions			9659468427	20210131	Indeed Ireland Operations 39458199	261,48	1			20220401		
+ac	Achats	4	20210101	401000	Fournisseurs divers	401DIV	Fournisseurs divers	3213	20210101	MASQUES PRO	1360,96	-1	J	20210101	20220401		
+ac	Achats	4	20210101	606300	Fournit. entretien & petit equip.			3213	20210101	MASQUES PRO	1290	1			20220401		
+ac	Achats	4	20210101	445660	Tva déductible sur autres biens et services			3213	20210101	MASQUES PRO	70,96	1			20220401		

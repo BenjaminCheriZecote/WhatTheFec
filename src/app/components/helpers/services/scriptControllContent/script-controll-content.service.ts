@@ -14,7 +14,7 @@ export class ScriptControllContentService {
     } );
     // si le trie fait remonter une ligne vide en début de fichier, elle est supprimée
     // cas fréquent des fichier .txt ou un retour à la ligne est parfois laissé en fin de fichier
-    if (!protoBody[0].length) protoBody.splice(0, 1);
+    if (!protoBody[0].length || protoBody[0].length <= 1) protoBody.splice(0, 1);
     return protoBody;
     }
 

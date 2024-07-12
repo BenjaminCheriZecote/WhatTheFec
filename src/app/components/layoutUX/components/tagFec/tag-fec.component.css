@@ -9,6 +9,8 @@
 
 .details span {
   margin-right: 0.5rem;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .progress {

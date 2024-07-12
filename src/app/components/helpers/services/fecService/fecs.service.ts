@@ -176,6 +176,7 @@ export class FecService {
       this.scriptControllContent.checkBalancePiece(header, body, ws2)
     ]);
     this.percentLoaded.next(90); // SET LOADING 90%
+    ws.spliceRows(1, 0, header);
     const newFec: Fec = {
       file: selectedFile,
       reportControllFile: {

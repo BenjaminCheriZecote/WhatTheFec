@@ -2,7 +2,7 @@
 
 https://wtfec.netlify.app
 
-![Home page](/homePage.png "Page d'acceuil.")
+![Home page](docs/homePage.png "Page d'acceuil.")
 
 L'application vise à aider les comptables dans la vérification de leur FEC (Fichier des écritures comptables). Ce dernier est un document légal exigé par l'administration fiscale française pour attester des comptes d'une entreprise. Le format attendu est donc bien défini, et doit répondre à plusieurs impératifs. Ici, il s'agit donc de vérifier la structure du fichier et la structure des écritures comptables. La cohérence de la comptabilité et les choix comptables ne sont en aucun cas pris en compte.
 
@@ -14,7 +14,12 @@ Les visiteurs peuvent donc déposer leur fichier pour le soumettre au test. Un p
 
 Cette application m'a permis de découvrir Angular. J'ai souhaité garder toute ma logique côté front-end et cantonner le back-end au Server Side Rendering en raison de ma stratégie de déploiement. Celle-ci est basique : avoir un déploiement simple et sans coût financier. Ainsi, j'ai opté pour un hébergement serverless, sans base de données, avec Netlify. De même, j'ai choisi le module ExcelJS pour créer le fichier de contrôle Excel.
 
-Cette application m'a permis de découvrir Angular. J'ai souhaité gardé toute ma logique coté front-end et cantonner le back end au Server Side Rendering en raison de ma stratégie de déploiement. Celle-ci est basique : avoir un déploiement simple et sans cout financier. Ainsi j'ai opté pour un hébergement serverless, sans base de donnée, avec Netlify. De même, j'ai choisi le module ExcelJS pour créer le fichier de control Excel.
-
 Cette petite application comporte deux routes front, ou le codage des composant se trouve dans les dossiers **[/src/app/components/roots]**. Ces derniers font appel à d'autres sous-composants rangé dans le dossier **[/src/components/layoutUX/components]**. 
+
+Exemple de fichiers FEC en erreurs :
+- [medium FEC](docs/736124099FEC20211231.txt)
+- [small FEC](docs/850281251FEC20211231.txt)
+- [large FEC](docs/861291352FEC20211231.txt)
+
+*Ecritures comptables  et numéros de SIREN ficitfs*
 
