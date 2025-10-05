@@ -1,11 +1,14 @@
 .header {
     color:var(--colorRedStrong);
+}
+
+.headerSticky {
     position:fixed;
     top:0;
 }
 
 .headerHome {
-    background-image: url('/homePageHeader.webp');
+    background-image: url('/homePageHeader.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
@@ -20,6 +23,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.7rem 1rem;
+    box-sizing: border-box;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 .headerSection nav {
@@ -100,5 +106,14 @@
     .headerTitle, .headerHomeTitle {
         display:none;
     }
-    
+    .headerSection nav {
+        padding-right: 0rem;
+    }
+   
+}
+
+@media (max-width: 300px) {
+    .headerNavLinkContainer {
+        gap: 0.5rem;
+    }
 }

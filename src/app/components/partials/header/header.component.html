@@ -1,5 +1,5 @@
 <header [class.headerHome]="isHome">
-    <section #header class="headerSection header" [class.headerBis]="!isHome">
+    <section #header class="headerSection header" [class.headerBis]="!isHome" [class.headerSticky]="!isSafari" >
         <h1 #h1 [ngClass]="{ 'headerHomeTitle': isHome, 'headerTitle':!isHome }" >What the FEC!</h1>
         <h1 class="headerTitleMobile">WTFEC</h1>
         <nav>
@@ -9,5 +9,4 @@
             </ul>
         </nav>
     </section>
-
 </header>

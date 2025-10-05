@@ -1,7 +1,8 @@
 import { NgClass, isPlatformBrowser, NgIf } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
-import {LogoComponent} from '../../layoutUX/logo/logo.component'
+import {LogoComponent} from '../../layoutUX/logo/logo.component';
+import { SafariService } from '../../helpers/services/safari/safari.service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,7 @@ import {LogoComponent} from '../../layoutUX/logo/logo.component'
 })
 export class HeaderComponent implements OnInit{
 
+  isSafari: boolean;
   isHome:Boolean;
   @ViewChild('header') headerElement!: ElementRef;
   @ViewChild('h1') h1Element!: ElementRef;
@@ -20,7 +22,8 @@ export class HeaderComponent implements OnInit{
   constructor(
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private safariService: SafariService
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +32,11 @@ export class HeaderComponent implements OnInit{
       if (event instanceof NavigationEnd) this.isHome = event.urlAfterRedirects === '/';
     });
     if (isPlatformBrowser(this.platformId)) window.addEventListener('scroll', this.scrollHeader);
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
+      this.isSafari = this.safariService.detectSafari();
+    } else {
+      this.isSafari = true;
+    }
   }
 
   ngOnDestroy(): void {

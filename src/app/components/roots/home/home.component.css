@@ -9,6 +9,7 @@ section div, section footer {
 .homeSection {
     display: flex;
     flex-flow: column nowrap;
+    overflow-x: hidden;
 }
 
 .headerHome {
@@ -56,13 +57,6 @@ section div, section footer {
 .homeArticle:nth-child(3) {
     transition-delay: 600ms;
 }
-.homeArticle:hover {
-    background-color: var(--colorRedDarkPlus);
-    color: var(--colorWhite);
-    transition: .2s ease-in-out;
-    transform: translateY(-2rem);
-}
-
 
 .homeArticle h3, .homeArticle p {
     line-height: 1.3rem;
@@ -138,17 +132,21 @@ section .zMargin {
     opacity:0;
     filter:blur(5px);
     transition: all 1s;
+    -webkit-transition: all 1s;
 }
 .hidden {
     transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
 }
 .hidden2 {
     transform: translateX(100%);
+    -webkit-transform: translateX(100%);
 }
 .show {
     opacity:1;
     filter: blur(0);
     transform:translateX(0);
+    -webkit-transform: translateX(0);
 }
 @media (prefers-reduced-motion:reduced) {
     .hidden, .hidden2 {
@@ -163,12 +161,17 @@ section .zMargin {
 }
 /* Media Query 630px */
 @media (max-width: 630px) {
+    section {
+        margin: 1rem 0rem;
+    }
     .homeArticleContainer {
         flex-flow: column;
         align-items: center;
     }
     .homeArticle {
         width: 60%;
+        box-shadow: none;
+        padding: 0rem;
     }
     .homeArticle h3 {
         font-size: 1.1rem;
@@ -188,5 +191,11 @@ section .zMargin {
     .policy h2, .policy h3, .test h2 {
         max-width:40rem;
     }     
+    .homeArticle:hover {
+        background-color: var(--colorRedDarkPlus);
+        color: var(--colorWhite);
+        transition: .2s ease-in-out;
+        transform: translateY(-2rem);
+    }
 }
 
