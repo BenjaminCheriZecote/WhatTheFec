@@ -1,23 +1,36 @@
 
 
 .fileSection{
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    width:60%;
-    max-width:35rem;
-    margin: 7rem auto;
-    gap:1rem;
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.8rem;
-    box-shadow:5px 5px 15px 5px rgb(205, 205, 205);
-    padding:1rem;
-    transition: .4s ease-in-out;
-  }
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  width:60%;
+  max-width:35rem;
+  margin: 7rem auto;
+  gap:1rem;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.8rem;
+  box-shadow:5px 5px 15px 5px rgb(205, 205, 205);
+  padding:1rem;
+  transition: .4s ease-in-out;
+}
 
 .reportContainer {
   margin-bottom: 7rem;
   padding:0rem 2rem;
+  animation: appearReport 1s ease-in-out;
+  min-height: 25rem;
+}
+
+@keyframes appearReport {
+  from {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
 
 .reportContainer p {
@@ -87,7 +100,7 @@
   flex-flow: row wrap;
 }
 .glossary {
-  margin:auto;
+  margin:0 auto;
 }
 .hidden {
   display: none;
@@ -105,8 +118,8 @@
   }
 }
 
-/* Media Query 600px */
-@media (max-width: 600px) {
+/* Media Query 800px */
+@media (max-width: 800px) {
   .fileSection {
     width:90%;
   }

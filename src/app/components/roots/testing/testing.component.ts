@@ -63,5 +63,4 @@ export class TestingComponent implements OnInit{
       this.fecService.setSelectedFec(event);
     }
   }
-
 }

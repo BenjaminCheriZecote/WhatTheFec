@@ -9,7 +9,13 @@
 .footer p {
     margin-bottom:1rem;
 }
-
+.footer a {
+    text-decoration: none;
+    transition: 500ms ease-in-out;
+}
+.footer a:hover {
+    color: var(--colorRedStrong);
+}
 @media (max-width: 630px) {
     .footer {
         margin-top:0rem;

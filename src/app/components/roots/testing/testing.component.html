@@ -16,7 +16,7 @@
     <p *ngIf=" this.errorTypeFile.length" class="errorTypeFile">{{this.errorTypeFile}}</p>
 </section>
 
-<section *ngIf="this.fec && this.fec.file && this.fecs.length" class="reportContainer ">
+<section *ngIf="this.fec && this.fec.file && this.fecs.length" @appearReport class="reportContainer">
     <div>
         <h2 class="reportTitle">Compte rendu {{this.fec.file.name}}</h2>
     </div>

@@ -8,6 +8,7 @@ import { LoaderIconComponent } from '../../icons/loaderIcon/loader-icon.componen
 import { DeleteIconComponent } from '../../icons/deleteIcon/delete-icon.component';
 import {UploadIconComponent} from '../../icons/uploadIcon/upload-icon.component'
 import { Fec } from '../../../helpers/types/Fec';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
@@ -15,7 +16,18 @@ import { Fec } from '../../../helpers/types/Fec';
   standalone: true,
   imports: [NgIf, FileIconComponent, LoaderIconComponent, DeleteIconComponent, UploadIconComponent ],
   templateUrl: './tag-fec.component.html',
-  styleUrl: './tag-fec.component.css'
+  styleUrl: './tag-fec.component.css',
+  animations: [
+    trigger('appearReport', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(-10px)' }),
+        animate('0.8s ease-in-out', style({ opacity: 1, transform: 'translateX(0)' }))
+      ]),
+      transition(':leave', [
+        animate('0.3s ease-in-out', style({ opacity: 0, transform: 'translateX(10px)' }))
+      ])
+    ])
+  ]
 })
 export class TagFecComponent implements OnInit{
   @Input() fec: any;
