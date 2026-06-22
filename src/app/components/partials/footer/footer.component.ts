@@ -8,5 +8,5 @@ import {LogoComponent} from '../../layoutUX/logo/logo.component'
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
-
+  currentYear = new Date().getFullYear();
 }
